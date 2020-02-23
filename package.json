@@ -1,17 +1,22 @@
 {
-  "name": "testsw",
+  "name": "beatrix-server",
   "version": "1.0.0",
-  "description": "server for testing scaleway resource",
+  "description": "beatrix server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
-  "keywords": [
-    "node"
-  ],
-  "author": "sohimazdai",
+  "author": "sohimazdai@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "@types/express": "^4.17.2",
+    "@types/mongoose": "^5.7.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^13.7.4",
+    "nodemon": "^2.0.2"
   }
 }
