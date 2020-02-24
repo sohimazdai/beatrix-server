@@ -5,7 +5,7 @@ const userRouter = require('./routes/user');
 var app = express();
 
 const PORT = process.env.port || 3000;
-const URL = "mongodb://localhost";
+const URL = "mongodb://localhost:27017";
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongo connection error'));
@@ -19,6 +19,7 @@ app.use(userRouter);
 
 async function start() {
   try {
+    console.info('Connecting to mongo')
     await mongoose.connect(URL, {
       useNewUrlParser: true,
       useFindAndModify: false,
