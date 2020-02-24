@@ -4,7 +4,7 @@ const router = Router();
 
 router.get('/user', async (req, res) => {
     const users = await User.find({});
-    res.send(users)
+    res.json(users)
 })
 
 router.get('/user/create', async (req, res) => {
@@ -14,6 +14,7 @@ router.get('/user/create', async (req, res) => {
     })
 
     await user.save();
+    res.send('CREATED')
 })
 
 module.exports = router;
