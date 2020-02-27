@@ -1,25 +1,32 @@
-const {Schema, model} = require('mongoose');
+const {
+    Schema,
+    model
+} = require('mongoose');
 
 const note = new Schema({
     id: {
         type: String,
         required: true
     },
+    date: {
+        type: Date,
+        required: true
+    },
     glucose: {
-        type: String,
+        type: Number,
         default: '0'
     },
     breadUnits: {
-        type: String,
+        type: Number,
         default: '0',
     },
     insulin: {
-        type: String,
+        type: Number,
         default: '0',
     },
     longInsulin: {
-        type: String,
-        default:  '0'
+        type: Number,
+        default: '0'
     },
     comment: {
         type: String,
@@ -27,4 +34,7 @@ const note = new Schema({
     }
 })
 
-module.exports = model('Note', note);
+module.exports = {
+    model: model('Note', note),
+    schema: note
+}
