@@ -5,7 +5,7 @@ const userRouter = require('./src/routes/user');
 
 var app = express();
 
-const PORT = process.env.port || 3000; //TODO:
+const PORT = process.env.port || 80; //TODO:
 const URL = "mongodb://localhost:27017";
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongo connection error'));
