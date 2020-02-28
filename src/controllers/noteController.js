@@ -1,9 +1,10 @@
-const Note = require('../models/note');
-const User = require('../models/user');
+const NoteModel = require('../models/noteModel');
+const NoteSchema = require('../schemas/noteSchema');
+const User = require('../models/userModel');
 
 class NoteController {
     static async getUserNotes(req, res) {
-        const notes = await Note.model.find({});
+        const notes = await NoteModel.find({});
         res.type('application/json')
         res.json(notes)
     }
@@ -16,7 +17,7 @@ class NoteController {
             const user = users[0]
 
             const data = req.body || {};
-            const note = new Note.model({
+            const note = new NoteSchema({
                 id: data.id || Date.now() + '',
                 date: new Date(),
                 glucose: data.glucose,

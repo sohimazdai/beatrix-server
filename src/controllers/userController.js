@@ -1,8 +1,9 @@
-const User = require('../models/user');
+const UserModel = require('../models/userModel');
+const UserSchema = require('../schemas/userSchema');
 
 class NoteController {
     static async getUser(req, res) {
-        const user = await User.find({id: 1});
+        const user = await UserModel.find({id: 1});
         res.type('application/json');
         res.json(user);
     }
@@ -10,9 +11,9 @@ class NoteController {
     static async createUser(req, res) {
         try {
 
-            const user = await User.find({id: '1'});
+            const user = await UserModel.find({id: '1'});
             if (!user.id) {
-                const newUser = new User({
+                const newUser = new UserSchema({
                     id: '1'
                 })
                 await newUser.save();

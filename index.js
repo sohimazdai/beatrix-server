@@ -1,11 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const noteRouter = require('./src/routes/note');
-const userRouter = require('./src/routes/user');
+const noteRoutes = require('./src/routes/noteRoutes');
+const userRoutes = require('./src/routes/userRoutes');
 
 var app = express();
 
-const PORT = process.env.port || 80; //TODO:
+const PORT = process.env.port || 3000; //TODO:
 const URL = "mongodb://localhost:27017";
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongo connection error'));
@@ -17,8 +17,8 @@ app.use(responseAccessSetter);
 app.use(express.urlencoded({
   extended: true
 }));
-app.use(noteRouter);
-app.use(userRouter);
+app.use(noteRoutes);
+app.use(userRoutes);
 app.use(logErrors);
 
 

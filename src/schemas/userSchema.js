@@ -1,7 +1,6 @@
-const Note = require('./note');
+const NoteSchema = require('./noteSchema');
 const {
     Schema,
-    model
 } = require('mongoose');
 
 const userSchema = new Schema({
@@ -9,15 +8,11 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    // socialMediaHandles: {
-    //     type: Map,
-    //     of: String
-    // }
     notes: {
         type: Map,
-        of: Note.schema,
+        of: NoteSchema,
         default: {}
     }
 })
 
-module.exports = model('User', userSchema);
+module.exports = userSchema;
