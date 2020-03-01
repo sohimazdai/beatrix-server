@@ -17,7 +17,7 @@ class NoteController {
             const user = users[0]
 
             const data = req.body || {};
-            const note = new NoteSchema({
+            const note = new NoteModel({
                 id: data.id || Date.now() + '',
                 date: new Date(),
                 glucose: data.glucose,

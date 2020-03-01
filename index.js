@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const noteRoutes = require('./src/routes/noteRoutes');
 const userRoutes = require('./src/routes/userRoutes');
-
+const testRoutes = require('./src/routes/check');
 var app = express();
 
 const PORT = process.env.port || 3000; //TODO:
@@ -17,6 +17,7 @@ app.use(responseAccessSetter);
 app.use(express.urlencoded({
   extended: true
 }));
+app.use(testRoutes)
 app.use(noteRoutes);
 app.use(userRoutes);
 app.use(logErrors);

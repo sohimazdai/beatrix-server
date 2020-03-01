@@ -13,7 +13,7 @@ class NoteController {
 
             const user = await UserModel.find({id: '1'});
             if (!user.id) {
-                const newUser = new UserSchema({
+                const newUser = new UserModel({
                     id: '1'
                 })
                 await newUser.save();
