@@ -1,32 +1,53 @@
 const UserModel = require('../models/userModel');
-const UserSchema = require('../schemas/userSchema');
 
-class NoteController {
+class UserController {
     static async getUser(req, res) {
-        const user = await UserModel.find({id: 1});
-        res.type('application/json');
-        res.json(user);
+        try {
+            var userId = req.body.userId;
+            const user = await UserModel.findOne({ id: userId });
+            if (user) {
+                res.type('application/json');
+                res.send(user);
+                return;
+            }
+            res.send('User is not exist');
+        } catch (e) {
+            res.send(e.message)
+        }
     }
 
-    static async createUser(req, res) {
+    static async deleteUser(req, res) {
         try {
+            var userId = req.body.userId;
+            const user = await UserModel.deleteOne({ id: userId });
+            res.type('application/json');
+            res.send(user);
+        } catch (e) {
+            res.send(e.message)
+        }
+    }
 
-            const user = await UserModel.find({id: '1'});
-            if (!user.id) {
+    static async syncUser(req, res) {
+        try {
+            const requestUser = {
+                ...req.body
+            };
+            const user = await UserModel.findOne({ id: requestUser.id });
+            if (!user) {
                 const newUser = new UserModel({
-                    id: '1'
-                })
+                    id: requestUser.id,
+                    email: requestUser.email,
+                });
                 await newUser.save();
-                res.status(200);
-                res.send('')
+                res.send(newUser);
             } else {
-                res.status(200);
-                res.send('Already created')
+                res.send(user);
             }
         } catch (e) {
-            console.log(__dirname + '/' + __filename + " catch error: ", e)
+            console.log(__dirname + '/' + __filename + " catch error: ", e);
+            res.send(error);
         }
     }
 }
 
-module.exports = NoteController;
+module.exports = UserController;
