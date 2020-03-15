@@ -1,6 +1,25 @@
 const UserModel = require('../models/userModel');
 
 class UserController {
+    static async findUser(req, res) {
+        try {
+            var id = req.body.id;
+            var email = req.body.email;
+            const user = !id && !email ?
+                await UserModel.find({}) :
+                [
+                    ...await UserModel.find({ id }),
+                    ...await UserModel.find({ email })
+                ];
+
+            res.type('application/json');
+            res.send(user);
+            return;
+        } catch (e) {
+            res.send(e.message)
+        }
+    }
+
     static async getUser(req, res) {
         try {
             var userId = req.body.userId;

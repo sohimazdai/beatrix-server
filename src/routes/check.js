@@ -44,6 +44,14 @@ const ROUTES = [
             userId: 'asdf'
         }
     },
+    {
+        path: ROUTES_ENUM.FIND_USERS,
+        method: 'POST',
+        body: {
+            id: 'asdf',
+            email: 'asd@asd.asd'
+        }
+    },
 ]
 
 module.exports = router;

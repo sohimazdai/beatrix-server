@@ -4,4 +4,5 @@ module.exports = {
     GET_USER: '/user',
     SYNC_USER: '/user/sync',
     DELETE_USER: '/user/delete',
+    FIND_USERS: '/user/find',
 }
