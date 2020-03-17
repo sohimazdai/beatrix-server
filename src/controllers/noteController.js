@@ -4,29 +4,31 @@ const User = require('../models/userModel');
 
 class NoteController {
     static async getUserNotes(req, res) {
-        const notes = await NoteModel.find({});
+        const notes = await NoteModel.find({ ...req.body });
         res.type('application/json')
         res.json(notes)
     }
 
     static async createUserNote(req, res) {
         try {
-            const users = await User.find({
-                id: 1
+            console.log(req.body)
+            const user = await User.findOne({
+                id: req.body.userId
             });
-            const user = users[0]
 
-            const data = req.body || {};
+            const data = req.body.note;
             const note = new NoteModel({
-                id: data.id || Date.now() + '',
-                date: new Date(),
+                id: data.date.toString(),
+                date: new Date(data.date),
                 glucose: data.glucose,
                 breadUnits: data.breadUnits,
                 insulin: data.insulin,
                 longInsulin: data.longInsulin,
-                comment: data.comment
+                comment: data.comment,
+                userId: req.body.userId
             })
-            user.notes.set(note.id, note);
+            console.log(note)
+            user.notes.set(`${note._id}`, note);
             await note.save();
             await user.save();
             res.status(200);

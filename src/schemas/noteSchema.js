@@ -7,8 +7,12 @@ const noteSchema = new Schema({
         type: String,
         required: true
     },
+    userId: {
+        type: String,
+        required: true
+    },
     date: {
-        type: Date,
+        type: Number,
         required: true
     },
     glucose: {

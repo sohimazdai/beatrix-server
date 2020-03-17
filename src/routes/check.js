@@ -13,13 +13,22 @@ router.get('/test/routes', (req, res) => {
 const ROUTES = [
     {
         path: ROUTES_ENUM.GET_NOTES,
-        method: 'GET',
+        method: 'POST',
+        body: {
+            userId: 'string'
+        }
     },
     {
         path: ROUTES_ENUM.CREATE_NOTE,
-        method: 'GET',
+        method: 'POST',
         body: {
-            note: 'Note'
+            id: 'string',
+            userId: 'string',
+            date: 'string',
+            glucose: 'string',
+            breadUnits: 'string',
+            insulin: 'string',
+            longInsulin: 'string'
         }
     },
     {

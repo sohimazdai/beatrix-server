@@ -4,8 +4,8 @@ const {
 const NoteController = require('../controllers/noteController');
 const router = Router();
 
-router.get('/note', NoteController.getUserNotes)
+router.post('/note', NoteController.getUserNotes)
 
-router.get('/note/create', NoteController.createUserNote)
+router.post('/note/create', NoteController.createUserNote)
 
 module.exports = router;

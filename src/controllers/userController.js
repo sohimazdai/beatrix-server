@@ -60,6 +60,7 @@ class UserController {
                 await newUser.save();
                 res.send(newUser);
             } else {
+
                 res.send(user);
             }
         } catch (e) {
