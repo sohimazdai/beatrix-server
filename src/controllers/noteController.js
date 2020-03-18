@@ -1,10 +1,12 @@
 const NoteModel = require('../models/noteModel');
 const NoteSchema = require('../schemas/noteSchema');
+const UserModel = require('../models/userModel');
 const User = require('../models/userModel');
 
 class NoteController {
     static async getUserNotes(req, res) {
-        const notes = await NoteModel.find({ ...req.body });
+        const user = await UserModel.findOne({ id: req.body.userId });
+        const notes = user.notes;
         res.type('application/json')
         res.json(notes)
     }
