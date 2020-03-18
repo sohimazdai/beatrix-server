@@ -38,9 +38,9 @@ class UserController {
     static async deleteUser(req, res) {
         try {
             var userId = req.body.userId;
-            const user = await UserModel.deleteOne({ id: userId });
+            const res = await UserModel.deleteOne({ id: userId });
             res.type('application/json');
-            res.send(user);
+            res.send(res);
         } catch (e) {
             res.send(e.message)
         }

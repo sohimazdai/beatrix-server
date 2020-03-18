@@ -12,6 +12,10 @@ router.get('/test/routes', (req, res) => {
 
 const ROUTES = [
     {
+        path: ROUTES_ENUM.GET_ALL_NOTES,
+        method: 'GET',
+    },
+    {
         path: ROUTES_ENUM.GET_NOTES,
         method: 'POST',
         body: {
@@ -29,6 +33,28 @@ const ROUTES = [
             breadUnits: 'string',
             insulin: 'string',
             longInsulin: 'string'
+        }
+    },
+    {
+        path: ROUTES_ENUM.UPDATE_NOTE,
+        method: 'POST',
+        body: {
+            userId: 'string',
+            id: 'string',
+            date: 'string',
+            prevDate: 'string',
+            glucose: 'string',
+            breadUnits: 'string',
+            insulin: 'string',
+            longInsulin: 'string',
+        }
+    },
+    {
+        path: ROUTES_ENUM.DELETE_NOTE,
+        method: 'POST',
+        body: {
+            userId: 'string',
+            date: 'string',
         }
     },
     {
