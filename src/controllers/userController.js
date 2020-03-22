@@ -6,6 +6,7 @@ class UserController {
             var id = req.body.id;
             var email = req.body.email;
             const user = !id && !email ?
+                //For test
                 await UserModel.find({}) :
                 [
                     ...await UserModel.find({ id }),

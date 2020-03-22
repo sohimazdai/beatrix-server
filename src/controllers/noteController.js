@@ -2,6 +2,28 @@ const NoteModel = require('../models/noteModel');
 const UserModel = require('../models/userModel');
 
 class NoteController {
+    static async syncUserNotes(req, res) {
+        try {
+            const notesToSync = req.body.notes;
+            const userId = req.body.userId;
+            const userNotes = await NoteModel.find({ userId });
+            const user = await UserModel.findOne({ id: userId });
+            for (const note of notesToSync) {
+                const newNote = createNote(note);
+                await newNote.save();
+                user.notes.set(`${newNote.id}`, newNote);
+            }
+            await user.save();
+            res.type('application/json');
+            res.status(200);
+            res.send(user.notes)
+        }
+        catch (e) {
+            console.log(__dirname + '/' + __filename + " catch error: ", e)
+            res.send(e.message)
+        }
+    }
+
     static async getAllNotes(req, res) {
         try {
             const notes = await NoteModel.find({});
@@ -84,16 +106,7 @@ class NoteController {
                 id: req.body.userId
             });
             const data = req.body;
-            const note = new NoteModel({
-                id: data.date.toString(),
-                date: new Date(data.date),
-                glucose: data.glucose,
-                breadUnits: data.breadUnits,
-                insulin: data.insulin,
-                longInsulin: data.longInsulin,
-                comment: data.comment,
-                userId: data.userId
-            });
+            const note = createNote(data);
             user.notes.set(`${note._id}`, note);
             await note.save();
             await user.save();
@@ -104,6 +117,19 @@ class NoteController {
             res.send(e.message);
         }
     }
+}
+
+function createNote(note) {
+    return new NoteModel({
+        id: note.id,
+        date: new Date(note.date),
+        glucose: note.glucose,
+        breadUnits: note.breadUnits,
+        insulin: note.insulin,
+        longInsulin: note.longInsulin,
+        comment: note.comment,
+        userId: note.userId
+    })
 }
 
 module.exports = NoteController;

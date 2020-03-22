@@ -58,6 +58,14 @@ const ROUTES = [
         }
     },
     {
+        path: ROUTES_ENUM.SYNC_NOTES,
+        method: "POST",
+        body: {
+            notes: '[]',
+            userId: 'string'
+        }
+    },
+    {
         path: ROUTES_ENUM.GET_USER,
         method: 'POST',
         body: {

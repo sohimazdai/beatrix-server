@@ -9,5 +9,6 @@ router.get('/note/all', NoteController.getAllNotes)
 router.post('/note/create', NoteController.createUserNote)
 router.post('/note/update', NoteController.updateUserNote)
 router.post('/note/delete', NoteController.deleteUserNote)
+router.post('/note/sync', NoteController.syncUserNotes)
 
 module.exports = router;

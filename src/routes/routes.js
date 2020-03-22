@@ -5,6 +5,7 @@ module.exports = {
     UPDATE_NOTE: '/note/update',
     CREATE_NOTE: '/note/create',
     DELETE_NOTE: '/note/delete',
+    SYNC_NOTES: '/note/sync',
     //USER
     GET_USER: '/user',
     SYNC_USER: '/user/sync',

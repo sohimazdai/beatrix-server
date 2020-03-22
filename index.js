@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const noteRoutes = require('./src/routes/noteRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const testRoutes = require('./src/routes/check');
+const pingRoutes = require('./src/routes/pingRoutes');
 const logger = require('morgan');
 
 var app = express();
@@ -20,6 +21,7 @@ app.use(responseAccessSetter);
 app.use(testRoutes)
 app.use(noteRoutes);
 app.use(userRoutes);
+app.use(pingRoutes);
 
 
 async function start() {
