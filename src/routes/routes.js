@@ -11,4 +11,6 @@ module.exports = {
     SYNC_USER: '/user/sync',
     DELETE_USER: '/user/delete',
     FIND_USERS: '/user/find',
+    UPDATE_SHEDULE_FOR_USER: '/user/shedule',
+    UPDATE_PROPERTIES_FOR_USER: '/user/properties',
 }

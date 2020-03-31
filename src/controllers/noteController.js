@@ -37,16 +37,14 @@ class NoteController {
     }
     static async deleteUserNote(req, res) {
         try {
-            const clientNoteId = req.body.date;
+            const clientNoteId = req.body.id;
             const user = await UserModel.findOne({ id: req.body.userId });
 
             const noteToDelete = await NoteModel.findOne({ id: clientNoteId });
             await NoteModel.findOneAndRemove({ id: clientNoteId })
 
-            if (user) {
-                user.notes.set(`${noteToDelete._id}`);
-                await user.save();
-            }
+            user.notes.set(`${noteToDelete.id}`);
+            await user.save();
 
             res.status(200);
             res.send("OK")
@@ -75,7 +73,7 @@ class NoteController {
             }, forUpdate);
             const noteToUpdate = await NoteModel.findOne({ id: forUpdate.id })
 
-            user.notes.set(`${noteToUpdate._id}`, noteToUpdate);
+            user.notes.set(`${noteToUpdate.id}`, noteToUpdate);
             await user.save();
 
             res.status(200);
@@ -107,11 +105,11 @@ class NoteController {
             });
             const data = req.body;
             const note = createNote(data);
-            user.notes.set(`${note._id}`, note);
+            user.notes.set(`${note.id}`, note);
             await note.save();
             await user.save();
             res.status(200);
-            res.send('OK')
+            res.send('OK');
         } catch (e) {
             console.log(__dirname + '/' + __filename + " catch error: ", e);
             res.send(e.message);
@@ -122,7 +120,7 @@ class NoteController {
 function createNote(note) {
     return new NoteModel({
         id: note.id,
-        date: new Date(note.date),
+        date: new Date(Number(note.date)),
         glucose: note.glucose,
         breadUnits: note.breadUnits,
         insulin: note.insulin,

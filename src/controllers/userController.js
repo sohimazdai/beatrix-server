@@ -1,6 +1,23 @@
 const UserModel = require('../models/userModel');
 
 class UserController {
+    static async updateUserShedule(req, res) {
+        try {
+            var userId = req.body.userId;
+            const user = await UserModel.findOne({ id: userId });
+            Object.values(req.body.shedule).map(sheduleItem => {
+                user.shedule.set(`${sheduleItem.id}`, sheduleItem);
+            });
+            await user.save();
+            res.type('application/json');
+            res.status(200);
+            res.send(user.shedule)
+        } catch (e) {
+            console.log(__dirname + '/' + __filename + " catch error: ", e);
+            res.send(error);
+        }
+    }
+
     static async findUser(req, res) {
         try {
             var id = req.body.id;
@@ -39,9 +56,9 @@ class UserController {
     static async deleteUser(req, res) {
         try {
             var userId = req.body.userId;
-            const res = await UserModel.deleteOne({ id: userId });
+            const result = await UserModel.deleteOne({ id: userId });
             res.type('application/json');
-            res.send(res);
+            res.send(result);
         } catch (e) {
             res.send(e.message)
         }
@@ -53,6 +70,7 @@ class UserController {
                 ...req.body
             };
             const user = await UserModel.findOne({ id: requestUser.id });
+            res.type('application/json');
             if (!user) {
                 const newUser = new UserModel({
                     id: requestUser.id,
@@ -61,7 +79,6 @@ class UserController {
                 await newUser.save();
                 res.send(newUser);
             } else {
-
                 res.send(user);
             }
         } catch (e) {

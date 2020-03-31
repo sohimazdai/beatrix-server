@@ -54,7 +54,7 @@ const ROUTES = [
         method: 'POST',
         body: {
             userId: 'string',
-            date: 'string',
+            id: 'string',
         }
     },
     {
