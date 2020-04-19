@@ -8,7 +8,7 @@ const logger = require('morgan');
 
 var app = express();
 
-const PORT = process.env.port || 3001; //TODO:
+const PORT = 80; //TODO:
 const URL = "mongodb://localhost:27017";
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongo connection error'));
