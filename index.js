@@ -1,43 +1,27 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const noteRouter = require('./src/routes/note');
+const noteRoutes = require('./src/routes/noteRoutes');
+const userRoutes = require('./src/routes/userRoutes');
+const testRoutes = require('./src/routes/check');
+const pingRoutes = require('./src/routes/pingRoutes');
+const logger = require('morgan');
 
 var app = express();
 
-const PORT = process.env.port || 80;
+const PORT = process.env.port || 3001; //TODO:
 const URL = "mongodb://localhost:27017";
-
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongo connection error'));
 db.once('open', () => console.info('mongo connected'));
 
-
-function requestLogger(req, res, next) {
-  console.log('Time:', Date.now());
-  console.log(req.originalUrl)
-  next();
-}
-
-function logErrors(err, req, res, next) {
-  console.error(err.stack);
-  next();
-}
-
-function responseAccessSetter(req, res, next) {
-  res.set({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-    'Access-Control-Allow-Headers': 'Content-Type, Session, Authorization'
-  });
-  next();
-}
-app.use(requestLogger);
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(responseAccessSetter);
-app.use(express.urlencoded({
-  extended: true
-}));
-app.use(noteRouter);
-app.use(logErrors);
+app.use(testRoutes)
+app.use(noteRoutes);
+app.use(userRoutes);
+app.use(pingRoutes);
 
 
 async function start() {
@@ -48,13 +32,21 @@ async function start() {
       useFindAndModify: false,
       useUnifiedTopology: true
     })
-
-    app.listen(PORT, function () {
-      console.log('Listen on port ' + PORT + '...');
-    });
+      .then(() => {
+        app.listen(PORT, function () {
+          console.log('Listen on port ' + PORT + '...');
+        })
+      });
   } catch (e) {
-    console.log(e)
+    console.log('App start error: ', e)
   }
 }
 
 start();
+
+function responseAccessSetter(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+}
