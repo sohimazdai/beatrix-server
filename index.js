@@ -5,18 +5,19 @@ const userRoutes = require('./src/routes/userRoutes');
 const testRoutes = require('./src/routes/check');
 const pingRoutes = require('./src/routes/pingRoutes');
 const logger = require('morgan');
+const bodyParser = require('body-parser');
 
 var app = express();
 
-const PORT = process.env.port || 3001; //TODO:
+const PORT = process.env.port || 80; //TODO:
 const URL = "mongodb://localhost:27017";
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongo connection error'));
 db.once('open', () => console.info('mongo connected'));
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 app.use(responseAccessSetter);
 app.use(testRoutes)
 app.use(noteRoutes);
