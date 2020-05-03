@@ -9,9 +9,20 @@ class NoteController {
             const userNotes = await NoteModel.find({ userId });
             const user = await UserModel.findOne({ id: userId });
             for (const note of notesToSync) {
-                const newNote = createNote(note);
-                await newNote.save();
-                user.notes.set(`${newNote.id}`, newNote);
+                if (note.reason == 'delete') {
+                    const noteToDelete = await NoteModel.findOne({ id: note.id });
+
+                    if (noteToDelete) {
+                        await NoteModel.findOneAndRemove({ id: note.id })
+                       
+                        user.notes.set(`${noteToDelete.id}`);
+                        await user.save();
+                    }
+                } else {
+                    const newNote = createNote(note);
+                    await newNote.save();
+                    user.notes.set(`${newNote.id}`, newNote);
+                }
             }
             await user.save();
             res.type('application/json');
@@ -19,7 +30,8 @@ class NoteController {
             res.send(user.notes)
         }
         catch (e) {
-            console.log(__dirname + '/' + __filename + " catch error: ", e)
+            console.log(__dirname + '/' + __filename + " catch error: ", e);
+            res.status(400);
             res.send(e.message)
         }
     }
