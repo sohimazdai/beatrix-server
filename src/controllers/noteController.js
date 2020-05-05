@@ -8,13 +8,54 @@ class NoteController {
             const userId = req.body.userId;
             const userNotes = await NoteModel.find({ userId });
             const user = await UserModel.findOne({ id: userId });
+
+            //start
+            console.log('user', user);
+
+            if (user.authType === 'email') {
+                const similarUsers = await UserModel.find({ email: user.email });
+                const googleUserId = similarUsers.filter(sU => sU.authType === 'google')[0].id;
+                const googleUser = await UserModel.findOne({ id: googleUserId });
+
+                if (googleUser) {
+                    const notesToSyncGoogleUser = [...user.notes.keys()];
+                    console.log('notes to google ', notesToSyncGoogleUser);
+
+                    //чистим гугл юзера
+                    for (const key of [...googleUser.notes.keys()]) {
+                        const noteToDelete = await NoteModel.findOne({ id: key });
+
+                        if (noteToDelete) {
+                            await NoteModel.findOneAndRemove({ id: key })
+
+                            googleUser.notes.set(`${noteToDelete.id}`);
+                        }
+                    }
+                    console.log('goggle user clear', googleUser);
+
+                    //заполняем гугл юзера
+                    for (const key of notesToSyncGoogleUser) {
+                        const noteToSaveToGoogle = await NoteModel.findOne({ id: key });
+                        noteToSaveToGoogle.userId = googleUserId;
+                        const newNote = createNote(noteToSaveToGoogle);
+                        await newNote.save();
+                        googleUser.notes.set(`${newNote.id}`, newNote);
+                    }
+                }
+                // await googleUser.save();
+                // console.log('google user filled', googleUser);
+                await googleUser.save();
+
+            }
+            // console.log('just user', user);
+
+            //end
             for (const note of notesToSync) {
                 if (note.reason == 'delete') {
                     const noteToDelete = await NoteModel.findOne({ id: note.id });
 
                     if (noteToDelete) {
                         await NoteModel.findOneAndRemove({ id: note.id })
-                       
                         user.notes.set(`${noteToDelete.id}`);
                         await user.save();
                     }

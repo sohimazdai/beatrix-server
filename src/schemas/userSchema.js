@@ -27,6 +27,10 @@ const userSchema = new Schema({
     properties: {
         type: UserPropertiesSchema,
         default: {}
+    },
+    authType: {
+        type: String,
+        default: "email"
     }
 })
 

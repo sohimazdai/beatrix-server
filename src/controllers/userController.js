@@ -79,6 +79,10 @@ class UserController {
                 await newUser.save();
                 res.send(newUser);
             } else {
+                //start
+                user.set('authType', requestUser.authType);
+                await user.save();
+                //end
                 res.send(user);
             }
         } catch (e) {
