@@ -95,6 +95,11 @@ const ROUTES = [
             email: 'asd@asd.asd'
         }
     },
+    {
+        path: ROUTES_ENUM.CLEAR_NOBODY,
+        method: 'POST',
+        body: {}
+    },
 ]
 
 module.exports = router;

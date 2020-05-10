@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const noteRoutes = require('./src/routes/noteRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const testRoutes = require('./src/routes/check');
-const pingRoutes = require('./src/routes/pingRoutes');
+const appRoutes = require('./src/routes/appRoutes');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 
 var app = express();
 
-const PORT = process.env.port || 80; //TODO:
+const PORT = process.env.port || 80;
 const URL = "mongodb://localhost:27017";
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongo connection error'));
@@ -22,7 +22,7 @@ app.use(responseAccessSetter);
 app.use(testRoutes)
 app.use(noteRoutes);
 app.use(userRoutes);
-app.use(pingRoutes);
+app.use(appRoutes);
 
 
 async function start() {

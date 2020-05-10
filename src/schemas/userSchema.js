@@ -30,8 +30,13 @@ const userSchema = new Schema({
     },
     authType: {
         type: String,
-        default: "email"
-    }
+    },
+    registeredOn: {
+        type: Date,
+    },
+    loggedInOn: {
+        type: Date,
+    },
 })
 
 module.exports = userSchema;

@@ -29,7 +29,6 @@ class UserController {
                     ...await UserModel.find({ id }),
                     ...await UserModel.find({ email })
                 ];
-
             res.type('application/json');
             res.send(user);
             return;
@@ -75,12 +74,21 @@ class UserController {
                 const newUser = new UserModel({
                     id: requestUser.id,
                     email: requestUser.email,
+                    authType: requestUser.authType,
+                    registeredOn: new Date(),
+                    loggedInOn: new Date(),
                 });
                 await newUser.save();
-                res.send(newUser);
             } else {
-                res.send(user);
+                if (!user.registeredOn) {
+                    user.set('registeredOn', new Date());
+                }
+                user.set('authType', requestUser.authType);
+                user.set('email', requestUser.email);
+                user.set('loggedInOn', new Date());
+                await user.save();
             }
+            res.send(user);
         } catch (e) {
             console.log(__dirname + '/' + __filename + " catch error: ", e);
             res.send(error);
