@@ -57,6 +57,6 @@ function responseAccessSetter(req, res, next) {
 function checker(req, res, next) {
   if (req.query && req.query.key === "h4NIt1NS") {
     req.originalUrl = req.originalUrl.split('?')[0];
+    next();
   }
-  next();
 }
