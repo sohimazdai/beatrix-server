@@ -10,6 +10,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    installationId: {
+        type: String,
+        default: '',
+    },
     email: {
         type: String,
         required: true
