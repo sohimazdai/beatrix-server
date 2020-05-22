@@ -9,5 +9,6 @@ router.post('/user/sync', UserController.syncUser)
 router.post('/user/delete', UserController.deleteUser)
 router.post('/user/find', UserController.findUser)
 router.post('/user/shedule', UserController.updateUserShedule)
+router.post('/user/installation', UserController.giveUserByInstallationId)
 
 module.exports = router;

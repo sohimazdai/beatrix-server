@@ -1,6 +1,31 @@
 const UserModel = require('../models/userModel');
 
 class UserController {
+    static async giveUserByInstallationId(req, res) {
+        try {
+            const installationId = req.body.installationId;
+
+            const user = await UserModel.findOne({ installationId });
+            if (user) {
+
+                user.set('installationId', "");
+                await user.save();
+
+                res.type('application/json');
+                res.status(200);
+                res.send({
+                    id: user.id,
+                    authType: user.authType,
+                    email: user.email,
+                })
+            } else {
+                res.send({})
+            }
+        } catch (e) {
+            console.log(__dirname + '/' + __filename + " catch error: ", e);
+            res.send(error);
+        }
+    }
     static async updateUserShedule(req, res) {
         try {
             var userId = req.body.userId;
@@ -77,11 +102,15 @@ class UserController {
                     authType: requestUser.authType,
                     registeredOn: new Date(),
                     loggedInOn: new Date(),
+                    installationId: requestUser.installationId,
                 });
                 await newUser.save();
             } else {
                 if (!user.registeredOn) {
                     user.set('registeredOn', new Date());
+                }
+                if (requestUser.installationId) {
+                    user.set('installationId', requestUser.installationId)
                 }
                 user.set('authType', requestUser.authType);
                 user.set('email', requestUser.email);
