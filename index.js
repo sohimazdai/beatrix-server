@@ -18,8 +18,8 @@ db.once('open', () => console.info('mongo connected'));
 
 app.use(checker);
 app.use(logger('dev'));
-app.use(bodyParser.json({limit: "50mb"}));
-app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
 app.use(responseAccessSetter);
 app.use(testRoutes)
 app.use(noteRoutes);
@@ -57,6 +57,6 @@ function responseAccessSetter(req, res, next) {
 function checker(req, res, next) {
   if (req.query && req.query.key === "h4NIt1NS") {
     req.originalUrl = req.originalUrl.split('?')[0];
+    next();
   }
-  next();
 }
