@@ -1,6 +1,26 @@
 const UserModel = require('../models/userModel');
 
 class UserController {
+    static async clearInstallationId(req, res) {
+        try {
+            const userId = req.body.userId;
+            console.log('🤖🤖🤖🤖 user', req.body);
+            const user = await UserModel.findOne({ id: userId });
+            if (user) {
+
+                user.set('installationId', "");
+                await user.save();
+
+                res.send("OK")
+            } else {
+                res.send("NOT_OK")
+            }
+        } catch (e) {
+            console.log(__dirname + '/' + __filename + " catch error: ", e);
+            res.send(error);
+        }
+    }
+
     static async giveUserByInstallationId(req, res) {
         try {
             const installationId = req.body.installationId;
