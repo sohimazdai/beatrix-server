@@ -4,7 +4,6 @@ class UserController {
     static async clearInstallationId(req, res) {
         try {
             const userId = req.body.userId;
-            console.log('🤖🤖🤖🤖 user', req.body);
             const user = await UserModel.findOne({ id: userId });
             if (user) {
 
