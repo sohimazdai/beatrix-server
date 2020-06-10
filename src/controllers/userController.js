@@ -1,4 +1,6 @@
 const UserModel = require('../models/userModel');
+const convertNotelist = require('../helpers/notesConverter');
+const convertShedule = require('../helpers/sheduleConverter');
 
 class UserController {
     static async clearInstallationId(req, res) {
@@ -48,11 +50,15 @@ class UserController {
     static async updateUserShedule(req, res) {
         try {
             var userId = req.body.userId;
+
             const user = await UserModel.findOne({ id: userId });
+
             Object.values(req.body.shedule).map(sheduleItem => {
                 user.shedule.set(`${sheduleItem.id}`, sheduleItem);
             });
+
             await user.save();
+
             res.type('application/json');
             res.status(200);
             res.send(user.shedule)
@@ -109,9 +115,8 @@ class UserController {
 
     static async syncUser(req, res) {
         try {
-            const requestUser = {
-                ...req.body
-            };
+            const requestUser = req.body.user;
+
             const user = await UserModel.findOne({ id: requestUser.id });
             res.type('application/json');
             if (!user) {
@@ -123,22 +128,104 @@ class UserController {
                     loggedInOn: new Date(),
                     installationId: requestUser.installationId,
                 });
+
                 await newUser.save();
+
+                const resNewUser = {
+                    id: newUser.id,
+                    email: newUser.email,
+                    authType: newUser.authType,
+                };
+
+                res.send(resNewUser);
             } else {
                 if (!user.registeredOn) {
                     user.set('registeredOn', new Date());
                 }
+
                 if (requestUser.installationId) {
                     user.set('installationId', requestUser.installationId)
                 }
+
                 user.set('authType', requestUser.authType);
                 user.set('email', requestUser.email);
                 user.set('loggedInOn', new Date());
+
                 await user.save();
+
+                const resUser = {
+                    id: user.id,
+                    email: user.email,
+                    authType: user.authType,
+                };
+
+                res.send(resUser);
             }
-            res.send(user);
+
+
         } catch (e) {
-            console.log(__dirname + '/' + __filename + " catch error: ", e);
+            console.log(__filename + " catch error: ", e.message);
+            res.status(400);
+            res.send(error);
+        }
+    }
+
+    // USER PROPERTIES
+    static async getUserProperties(req, res) {
+        try {
+            var userId = req.body.userId;
+            const user = await UserModel.findOne({ id: userId });
+
+            if (user) {
+                res.type('application/json');
+                res.send(user.properties);
+                return;
+            }
+
+            res.send('User is not exist');
+        } catch (e) {
+            console.log(__filename + " catch error: ", e.message);
+            res.status(400);
+            res.send(error);
+        }
+    }
+
+    static async syncUserProperties(req, res) {
+        try {
+            const userId = req.body.userId;
+            const properties = req.body.properties;
+            const idsToConvert = req.body.idsToConvert;
+            const shedule = req.body.shedule;
+
+            const user = await UserModel.findOne({ id: userId });
+
+            res.type('application/json');
+
+            const userProperties = user.properties;
+
+            user.set('properties', properties);
+
+            res.status(200);
+            await user.save();
+
+            if (
+                (userProperties.glycemiaMeasuringType &&
+                    userProperties.glycemiaMeasuringType !== properties.glycemiaMeasuringType) ||
+                (userProperties.carbsMeasuringType &&
+                    userProperties.carbsMeasuringType !== properties.carbsMeasuringType)
+            ) {
+                await convertNotelist(user, idsToConvert, userProperties, properties);
+                await convertShedule(user, shedule, userProperties, properties);
+                await user.save();
+
+                res.send(user);
+                return;
+            }
+            res.status(200);
+            res.send({});
+        } catch (e) {
+            console.log(__filename + " catch error: ", e.message);
+            res.status(500);
             res.send(error);
         }
     }

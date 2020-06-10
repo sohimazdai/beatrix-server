@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const querystring = require('querystring');
 const noteRoutes = require('./src/routes/noteRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const testRoutes = require('./src/routes/check');
@@ -25,7 +24,6 @@ app.use(testRoutes)
 app.use(noteRoutes);
 app.use(userRoutes);
 app.use(appRoutes);
-
 
 async function start() {
   try {
