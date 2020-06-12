@@ -45,8 +45,8 @@ function convertSheduleItem(
     sheduleItem.carbohydrateRatio && prevCarbsMeasuringType === CarbsMeasuringType.CARBOHYDRATES &&
     currentCarbsMeasuringType === CarbsMeasuringType.BREAD_UNITS
   ) {
-    sheduleItem.carbohydrateRatio = Math.round(
-      sheduleItem.carbohydrateRatio * carbsUnitWeightType
+    sheduleItem.carbohydrateRatio = Number(
+      (sheduleItem.carbohydrateRatio / carbsUnitWeightType).toFixed(1)
     );
   }
   else if (
@@ -54,7 +54,7 @@ function convertSheduleItem(
     currentCarbsMeasuringType === CarbsMeasuringType.CARBOHYDRATES
   ) {
     sheduleItem.carbohydrateRatio = Number(
-      (sheduleItem.carbohydrateRatio / carbsUnitWeightType)
+      (sheduleItem.carbohydrateRatio * carbsUnitWeightType).toFixed(1)
     );
   }
 
