@@ -206,6 +206,34 @@ class UserController {
         }
     }
 
+    static async setUserPropertiesForTestApi(req, res) {
+        try {
+            const userId = req.body.userId;
+            const targetGlycemia = req.body.targetGlycemia;
+            const glycemiaMeasuringType = req.body.glycemiaMeasuringType;
+            const carbsMeasuringType = req.body.carbsMeasuringType;
+            const carbsUnitWeightType = req.body.carbsUnitWeightType;
+
+            const user = await UserModel.findOne({ id: userId });
+
+            user.set('properties', {
+                targetGlycemia: targetGlycemia || user.properties.targetGlycemia,
+                glycemiaMeasuringType: glycemiaMeasuringType || user.properties.glycemiaMeasuringType,
+                carbsMeasuringType: carbsMeasuringType || user.properties.carbsMeasuringType,
+                carbsUnitWeightType: carbsUnitWeightType || user.properties.carbsUnitWeightType,
+            });
+
+            await user.save();
+
+            res.status(200);
+            res.send(user.properties);
+        } catch (e) {
+            console.log(__filename + " catch error: ", e.message);
+            res.status(500);
+            res.send(error);
+        }
+    }
+
     static async syncUserProperties(req, res) {
         try {
             const userId = req.body.userId;

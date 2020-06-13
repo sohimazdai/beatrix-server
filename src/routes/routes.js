@@ -13,7 +13,8 @@ module.exports = {
     FIND_USERS: '/user/find',
     UPDATE_SHEDULE_FOR_USER: '/user/shedule',
     UPDATE_PROPERTIES_FOR_USER: '/user/properties',
-    CLEAR_USER_PROPERTIES: '/user/properties/clear',
+    CLEAR_USER_PROPERTIES_TEST: '/user/properties/clear',
+    SET_USER_PROPERTIES_TEST: '/user/properties/set',
     //APP
     CLEAR_NOBODY: '/nobody/clear',
 }

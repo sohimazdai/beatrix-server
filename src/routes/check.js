@@ -101,10 +101,21 @@ const ROUTES = [
         body: {}
     },
     {
-        path: ROUTES_ENUM.CLEAR_USER_PROPERTIES,
+        path: ROUTES_ENUM.CLEAR_USER_PROPERTIES_TEST,
         method: 'POST',
         body: {
             userId: 'stringa',
+        }
+    },
+    {
+        path: ROUTES_ENUM.SET_USER_PROPERTIES_TEST,
+        method: 'POST',
+        body: {
+            userId: 'stringa',
+            targetGlycemia: 'string',
+            glycemiaMeasuringType: 'string',
+            carbsMeasuringType: 'string',
+            carbsUnitWeightType: 'string',
         }
     },
 ]
