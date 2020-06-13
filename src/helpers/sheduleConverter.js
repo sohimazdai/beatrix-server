@@ -67,8 +67,6 @@ async function convertShedule(user, shedule, prevProperties, currentProperties) 
 
     user.shedule.set(`${sheduleItem.id}`, convertedSheduleItem);
   }));
-
-  await user.save();
 };
 
 module.exports = convertShedule;

@@ -70,11 +70,8 @@ async function convertNoteList(user, idsToConvert, prevProperties, currentProper
       const noteThatConvertedAndReplaced = await NoteModel.findOne({ id })
 
       user.notes.set(id, noteThatConvertedAndReplaced);
-
-      await user.save();
     }
   }
-  await user.save();
 };
 
 module.exports = convertNoteList;
