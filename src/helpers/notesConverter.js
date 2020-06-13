@@ -47,18 +47,12 @@ function convertNote(
     note.breadUnits && prevCarbsMeasuringType === CarbsMeasuringType.CARBOHYDRATES &&
     currentCarbsMeasuringType === CarbsMeasuringType.BREAD_UNITS
   ) {
-    console.log('🤖🤖🤖🤖 from carbs to bu');
-    console.log('🤖🤖🤖🤖 carbsUnitWeightType', carbsUnitWeightType);
-    console.log('🤖🤖🤖🤖 new bu', Number((note.breadUnits / carbsUnitWeightType).toFixed(1)));
     note.set('breadUnits', Number((note.breadUnits / carbsUnitWeightType).toFixed(1)));
   }
   else if (
     note.breadUnits && prevCarbsMeasuringType === CarbsMeasuringType.BREAD_UNITS &&
     currentCarbsMeasuringType === CarbsMeasuringType.CARBOHYDRATES
   ) {
-    console.log('🤖🤖🤖🤖 from bu to carbs');
-    console.log('🤖🤖🤖🤖 carbsUnitWeightType', carbsUnitWeightType);
-    console.log('🤖🤖🤖🤖 new bu', Number((note.breadUnits / carbsUnitWeightType).toFixed(1)));
     note.set('breadUnits', Math.round(note.breadUnits * carbsUnitWeightType));
   }
 
@@ -69,14 +63,11 @@ async function convertNoteList(user, idsToConvert, prevProperties, currentProper
   for (const id of idsToConvert) {
     const noteToConvert = await NoteModel.findOne({ id });
     if (noteToConvert) {
-      console.log('🤖🤖🤖🤖 noteToConvert', noteToConvert);
       const convertedNote = convertNote(noteToConvert, prevProperties, currentProperties);
-      console.log('🤖🤖🤖🤖 convertedNote', convertedNote);
 
       await NoteModel.replaceOne({ id: convertedNote.id }, convertedNote);
 
       const noteThatConvertedAndReplaced = await NoteModel.findOne({ id })
-      console.log('🤖🤖🤖🤖 noteThatConvertedAndReplaced', noteThatConvertedAndReplaced);
 
       user.notes.set(id, noteThatConvertedAndReplaced);
 

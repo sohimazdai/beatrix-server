@@ -191,7 +191,6 @@ class UserController {
     static async clearUserPropertiesForTestApi(req, res) {
         try {
             const userId = req.body.userId;
-            console.log('🤖🤖🤖🤖 body', req.body);
             const user = await UserModel.findOne({ id: userId });
 
             user.set('properties', {});
