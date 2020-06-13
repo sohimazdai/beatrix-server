@@ -132,9 +132,8 @@ class UserController {
                 await newUser.save();
 
                 const resNewUser = {
-                    id: newUser.id,
-                    email: newUser.email,
-                    authType: newUser.authType,
+                    properties: {},
+                    shedule: {},
                 };
 
                 res.send(resNewUser);
@@ -154,9 +153,8 @@ class UserController {
                 await user.save();
 
                 const resUser = {
-                    id: user.id,
-                    email: user.email,
-                    authType: user.authType,
+                    properties: user.properties,
+                    shedule: user.shedule,
                 };
 
                 res.send(resUser);
@@ -186,6 +184,25 @@ class UserController {
         } catch (e) {
             console.log(__filename + " catch error: ", e.message);
             res.status(400);
+            res.send(error);
+        }
+    }
+
+    static async clearUserPropertiesForTestApi(req, res) {
+        try {
+            const userId = req.body.userId;
+            console.log('🤖🤖🤖🤖 body', req.body);
+            const user = await UserModel.findOne({ id: userId });
+
+            user.set('properties', {});
+
+            await user.save();
+
+            res.status(200);
+            res.send('OK');
+        } catch (e) {
+            console.log(__filename + " catch error: ", e.message);
+            res.status(500);
             res.send(error);
         }
     }

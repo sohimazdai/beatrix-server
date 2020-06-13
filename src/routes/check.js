@@ -100,6 +100,13 @@ const ROUTES = [
         method: 'POST',
         body: {}
     },
+    {
+        path: ROUTES_ENUM.CLEAR_USER_PROPERTIES,
+        method: 'POST',
+        body: {
+            userId: 'stringa',
+        }
+    },
 ]
 
 module.exports = router;
