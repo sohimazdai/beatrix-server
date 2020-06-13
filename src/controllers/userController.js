@@ -16,8 +16,8 @@ class UserController {
             } else {
                 res.send("NOT_OK")
             }
-        } catch (e) {
-            console.log(__dirname + '/' + __filename + " catch error: ", e);
+        } catch (error) {
+            console.log(__dirname + '/' + __filename + " catch error: ", error);
             res.send(error);
         }
     }
@@ -42,8 +42,8 @@ class UserController {
             } else {
                 res.send({})
             }
-        } catch (e) {
-            console.log(__dirname + '/' + __filename + " catch error: ", e);
+        } catch (error) {
+            console.log(__dirname + '/' + __filename + " catch error: ", error);
             res.send(error);
         }
     }
@@ -62,8 +62,8 @@ class UserController {
             res.type('application/json');
             res.status(200);
             res.send(user.shedule)
-        } catch (e) {
-            console.log(__dirname + '/' + __filename + " catch error: ", e);
+        } catch (error) {
+            console.log(__dirname + '/' + __filename + " catch error: ", error);
             res.send(error);
         }
     }
@@ -82,8 +82,8 @@ class UserController {
             res.type('application/json');
             res.send(user);
             return;
-        } catch (e) {
-            res.send(e.message)
+        } catch (error) {
+            res.send(error.message)
         }
     }
 
@@ -97,8 +97,8 @@ class UserController {
                 return;
             }
             res.send('User is not exist');
-        } catch (e) {
-            res.send(e.message)
+        } catch (error) {
+            res.send(error.message)
         }
     }
 
@@ -108,8 +108,8 @@ class UserController {
             const result = await UserModel.deleteOne({ id: userId });
             res.type('application/json');
             res.send(result);
-        } catch (e) {
-            res.send(e.message)
+        } catch (error) {
+            res.send(error.message)
         }
     }
 
@@ -161,8 +161,8 @@ class UserController {
             }
 
 
-        } catch (e) {
-            console.log(__filename + " catch error: ", e.message);
+        } catch (error) {
+            console.log(__filename + " catch error: ", error.message);
             res.status(400);
             res.send(error);
         }
@@ -181,8 +181,8 @@ class UserController {
             }
 
             res.send('User is not exist');
-        } catch (e) {
-            console.log(__filename + " catch error: ", e.message);
+        } catch (error) {
+            console.log(__filename + " catch error: ", error.message);
             res.status(400);
             res.send(error);
         }
@@ -199,8 +199,8 @@ class UserController {
 
             res.status(200);
             res.send('OK');
-        } catch (e) {
-            console.log(__filename + " catch error: ", e.message);
+        } catch (error) {
+            console.log(__filename + " catch error: ", error.message);
             res.status(500);
             res.send(error);
         }
@@ -227,8 +227,8 @@ class UserController {
 
             res.status(200);
             res.send(user.properties);
-        } catch (e) {
-            console.log(__filename + " catch error: ", e.message);
+        } catch (error) {
+            console.log(__filename + " catch error: ", error.message);
             res.status(500);
             res.send(error);
         }
@@ -267,8 +267,8 @@ class UserController {
             }
             res.status(200);
             res.send({});
-        } catch (e) {
-            console.log(__filename + " catch error: ", e.message);
+        } catch (error) {
+            console.log(__filename + " catch error: ", error.message);
             res.status(500);
             res.send(error);
         }
