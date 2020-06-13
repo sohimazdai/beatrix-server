@@ -83,7 +83,7 @@ class UserController {
             res.send(user);
             return;
         } catch (error) {
-            res.send(error.message)
+            res.send(error && error.message)
         }
     }
 
@@ -98,7 +98,7 @@ class UserController {
             }
             res.send('User is not exist');
         } catch (error) {
-            res.send(error.message)
+            res.send(error && error.message)
         }
     }
 
@@ -109,7 +109,7 @@ class UserController {
             res.type('application/json');
             res.send(result);
         } catch (error) {
-            res.send(error.message)
+            res.send(error && error.message)
         }
     }
 
@@ -162,7 +162,7 @@ class UserController {
 
 
         } catch (error) {
-            console.log(__filename + " catch error: ", error.message);
+            console.log(__filename + " catch error: ", error && error.message);
             res.status(400);
             res.send(error);
         }
@@ -182,7 +182,7 @@ class UserController {
 
             res.send('User is not exist');
         } catch (error) {
-            console.log(__filename + " catch error: ", error.message);
+            console.log(__filename + " catch error: ", error && error.message);
             res.status(400);
             res.send(error);
         }
@@ -200,7 +200,7 @@ class UserController {
             res.status(200);
             res.send('OK');
         } catch (error) {
-            console.log(__filename + " catch error: ", error.message);
+            console.log(__filename + " catch error: ", error && error.message);
             res.status(500);
             res.send(error);
         }
@@ -228,7 +228,7 @@ class UserController {
             res.status(200);
             res.send(user.properties);
         } catch (error) {
-            console.log(__filename + " catch error: ", error.message);
+            console.log(__filename + " catch error: ", error && error.message);
             res.status(500);
             res.send(error);
         }
@@ -268,7 +268,7 @@ class UserController {
             res.status(200);
             res.send({});
         } catch (error) {
-            console.log(__filename + " catch error: ", error.message);
+            console.log(__filename + " catch error: ", error && error.message);
             res.status(500);
             res.send(error);
         }
