@@ -1,18 +1,34 @@
 const Excel = require('exceljs');
 const fs = require('fs');
+const path = require('path');
+const mime = require('mime');
 
 const UserModel = require('../models/userModel');
 const NoteModel = require('../models/noteModel');
 const { title } = require('process');
 
 class ExportController {
-  static async download(req, res) {
+  static async unlinkFile(req, res) {
     try {
       const userId = req.body.userId;
-
+      var file = `${__dirname}/${userId}.xlsx`;
+      fs.unlinkSync(file);
       res.status(200);
-      res.download(__dirname, `${userId}.xlsx`);
       res.end();
+    } catch (error) {
+      console.log(__filename + " catch error: ", error && error.message);
+      res.status(500);
+      res.send(error);
+    }
+  }
+
+  static async download(req, res) {
+    try {
+      const userId = req.query.userId;
+
+      var file = `${__dirname}/${userId}.xlsx`;
+
+      await res.download(file);
     } catch (error) {
       console.log(__filename + " catch error: ", error && error.message);
       res.status(500);
@@ -28,7 +44,6 @@ class ExportController {
       const to = req.body.to;
       const stats = req.body.stats || {};
 
-      const user = await UserModel.findOne({ id: userId });
       const userNotes = await NoteModel.find({ userId });
       const sortedUserNotes = userNotes
         .sort((noteA, noteB) => noteB.date - noteA.date)
@@ -89,20 +104,7 @@ class ExportController {
       })
       worksheet.commit();
 
-      workbook.commit().then(function () {
-        console.log('xls file is written.');
-      });
-
-      var stat = fs.statSync(fileName);
-
-      res.writeHead(200, {
-        'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        'Content-Length': stat.size
-      });
-
-      var readStream = fs.createReadStream(fileName);
-      // We replaced all the event handlers with a simple call to readStream.pipe()
-      readStream.pipe(res);
+      await workbook.commit();
       res.end();
     } catch (error) {
       console.log(__filename + " catch error: ", error && error.message);
