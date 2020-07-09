@@ -1,11 +1,7 @@
 const Excel = require('exceljs');
 const fs = require('fs');
-const path = require('path');
-const mime = require('mime');
 
-const UserModel = require('../models/userModel');
 const NoteModel = require('../models/noteModel');
-const { title } = require('process');
 
 class ExportController {
   static async unlinkFile(req, res) {
