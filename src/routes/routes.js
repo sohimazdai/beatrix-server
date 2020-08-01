@@ -17,4 +17,6 @@ module.exports = {
     SET_USER_PROPERTIES_TEST: '/user/properties/set',
     //APP
     CLEAR_NOBODY: '/nobody/clear',
+    //ONBOARDING
+    COMPLETE_ONBOARDING: '/onboarding/complete',
 }

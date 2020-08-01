@@ -4,10 +4,10 @@ const noteRoutes = require('./src/routes/noteRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const testRoutes = require('./src/routes/check');
 const exportRoutes = require('./src/routes/exportRoutes');
+const onboardingRoutes = require('./src/routes/onboardingRoutes');
 const appRoutes = require('./src/routes/appRoutes');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-const fs = require('fs');
 
 var app = express();
 
@@ -26,6 +26,7 @@ app.use(testRoutes)
 app.use(noteRoutes);
 app.use(userRoutes);
 app.use(exportRoutes);
+app.use(onboardingRoutes);
 app.use(appRoutes);
 
 async function start() {

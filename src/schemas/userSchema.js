@@ -41,6 +41,10 @@ const userSchema = new Schema({
     loggedInOn: {
         type: Date,
     },
+    isOnboardingCompleted: {
+        type: Boolean,
+        default: false,
+    },
 })
 
 module.exports = userSchema;
