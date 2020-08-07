@@ -41,7 +41,7 @@ const userSchema = new Schema({
     loggedInOn: {
         type: Date,
     },
-    isOnboardingCompleted: {
+    isNeedToShowOnboarding: {
         type: Boolean,
         default: false,
     },

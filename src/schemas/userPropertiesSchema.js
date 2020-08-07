@@ -15,6 +15,9 @@ const userPropertiesSchema = new Schema({
     carbsUnitWeightType: {
         type: Number,
     },
+    shortInsulinType: {
+        type: String,
+    },
 })
 
 module.exports = userPropertiesSchema;

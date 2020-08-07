@@ -120,6 +120,7 @@ class UserController {
 
             const user = await UserModel.findOne({ id: requestUser.id });
             res.type('application/json');
+
             if (!user) {
                 const newUser = new UserModel({
                     id: requestUser.id,
@@ -128,6 +129,7 @@ class UserController {
                     registeredOn: new Date(),
                     loggedInOn: new Date(),
                     installationId: requestUser.installationId,
+                    isNeedToShowOnboarding: true,
                 });
 
                 await newUser.save();
@@ -135,6 +137,7 @@ class UserController {
                 const resNewUser = {
                     properties: {},
                     shedule: {},
+                    isNeedToShowOnboarding: true,
                 };
 
                 res.send(resNewUser);
@@ -150,14 +153,14 @@ class UserController {
                 user.set('authType', requestUser.authType);
                 user.set('email', requestUser.email);
                 user.set('loggedInOn', new Date());
-                user.set('isOnboardingCompleted', true);
+                user.set('isNeedToShowOnboarding', false);
 
                 await user.save();
 
                 const resUser = {
                     properties: user.properties,
                     shedule: user.shedule,
-                    isOnboardingCompleted: true,
+                    isNeedToShowOnboarding: false,
                 };
 
                 res.send(resUser);

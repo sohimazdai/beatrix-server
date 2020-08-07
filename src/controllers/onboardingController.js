@@ -10,8 +10,9 @@ class OnboardingController {
       const user = await UserModel.findOne({ id: userId });
 
       if (user && skipped) {
-        user.set('isOnboardingCompleted', true);
+        user.set('isNeedToShowOnboarding', false);
         user.set('properties', {
+          shortInsulinType: diabetesProperties.shortInsulinType || null,
           targetGlycemia: user.properties.targetGlycemia,
           glycemiaMeasuringType: user.properties.glycemiaMeasuringType,
           carbsMeasuringType: user.properties.carbsMeasuringType,
@@ -20,13 +21,15 @@ class OnboardingController {
 
         await user.save();
 
+        res.status(200);
         res.send("OK");
         return;
       }
 
-      if (user && !user.isOnboardingCompleted) {
-        user.set('isOnboardingCompleted', true);
+      if (user && !user.isNeedToShowOnboarding) {
+        user.set('isNeedToShowOnboarding', false);
         user.set('properties', {
+          shortInsulinType: diabetesProperties.shortInsulinType || null,
           targetGlycemia: user.properties.targetGlycemia,
           glycemiaMeasuringType: diabetesProperties.glycemiaMeasuringType || user.properties.glycemiaMeasuringType,
           carbsMeasuringType: diabetesProperties.carbsMeasuringType || user.properties.carbsMeasuringType,
@@ -35,11 +38,11 @@ class OnboardingController {
 
         await user.save();
 
+        res.status(200);
         res.send("OK");
         return;
       }
 
-      res.status(400);
       res.send();
 
     } catch (error) {
