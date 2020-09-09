@@ -19,4 +19,6 @@ module.exports = {
     CLEAR_NOBODY: '/nobody/clear',
     //ONBOARDING
     COMPLETE_ONBOARDING: '/onboarding/complete',
+    //TAGS
+    TAGS_SYNC: '/tag/sync',
 }

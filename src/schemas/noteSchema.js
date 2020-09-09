@@ -34,7 +34,11 @@ const noteSchema = new Schema({
     comment: {
         type: String,
         default: "",
-    }
+    },
+    tagIds: {
+        type: [Number],
+        default: [],
+    },
 })
 
 module.exports = noteSchema

@@ -137,6 +137,7 @@ class UserController {
                 const resNewUser = {
                     properties: {},
                     shedule: {},
+                    tagList: {},
                     isNeedToShowOnboarding: true,
                 };
 
@@ -160,13 +161,12 @@ class UserController {
                 const resUser = {
                     properties: user.properties,
                     shedule: user.shedule,
+                    tagList: user.tagList,
                     isNeedToShowOnboarding: false,
                 };
 
                 res.send(resUser);
             }
-
-
         } catch (error) {
             console.log(__filename + " catch error: ", error && error.message);
             res.status(400);

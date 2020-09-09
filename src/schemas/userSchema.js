@@ -4,6 +4,7 @@ const UserSheduleSchema = require('./userSheduleSchema');
 const {
     Schema,
 } = require('mongoose');
+const TagSchema = require('./tagSchema');
 
 const userSchema = new Schema({
     id: {
@@ -45,6 +46,11 @@ const userSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    tagList: {
+        type: Map,
+        of: TagSchema,
+        default: {}
+    }
 })
 
 module.exports = userSchema;

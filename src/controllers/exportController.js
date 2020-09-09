@@ -3,6 +3,8 @@ const fs = require('fs');
 
 const NoteModel = require('../models/noteModel');
 
+const MS_IN_HOUR = 60 * 60 * 1000;
+
 class ExportController {
   static async unlinkFile(req, res) {
     try {
@@ -39,6 +41,12 @@ class ExportController {
       const from = req.body.from;
       const to = req.body.to;
       const stats = req.body.stats || {};
+      const clientTimezoneOffset = req.body.timezoneOffset || 0;
+
+      //минус пока непонятно отчего
+      const serverTimezoneOffset = -Math.round(
+        (new Date().getTimezoneOffset() - clientTimezoneOffset) / 60
+      );
 
       const userNotes = await NoteModel.find({ userId });
       const sortedUserNotes = userNotes
@@ -77,16 +85,18 @@ class ExportController {
       ];
 
       sortedUserNotes.map(note => {
+        const alteredDate = note.date + serverTimezoneOffset * MS_IN_HOUR;
+
         const date =
-          (new Date(note.date).getDate() < 10 ? '0' + new Date(note.date).getDate() : new Date(note.date).getDate()) +
+          (new Date(alteredDate).getDate() < 10 ? '0' + new Date(alteredDate).getDate() : new Date(alteredDate).getDate()) +
           '.' +
-          (new Date(note.date).getMonth() < 9 ? '0' + (new Date(note.date).getMonth() + 1) : (new Date(note.date).getMonth() + 1)) +
+          (new Date(alteredDate).getMonth() < 9 ? '0' + (new Date(alteredDate).getMonth() + 1) : (new Date(alteredDate).getMonth() + 1)) +
           '.' +
-          (new Date(note.date).getFullYear());
+          (new Date(alteredDate).getFullYear());
         const time =
-          (new Date(note.date).getHours() < 10 ? '0' + (new Date(note.date).getHours()) : (new Date(note.date).getHours())) +
+          (new Date(alteredDate).getHours() < 10 ? '0' + (new Date(alteredDate).getHours()) : (new Date(alteredDate).getHours())) +
           ':' +
-          (new Date(note.date).getMinutes() < 10 ? '0' + (new Date(note.date).getMinutes()) : (new Date(note.date).getMinutes()));
+          (new Date(alteredDate).getMinutes() < 10 ? '0' + (new Date(alteredDate).getMinutes()) : (new Date(alteredDate).getMinutes()));
 
         worksheet.addRow({
           date,
