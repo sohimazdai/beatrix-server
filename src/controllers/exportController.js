@@ -43,8 +43,7 @@ class ExportController {
       const stats = req.body.stats || {};
       const clientTimezoneOffset = req.body.timezoneOffset || 0;
 
-      //минус пока непонятно отчего
-      const serverTimezoneOffset = -Math.round(
+      const serverTimezoneOffset = Math.round(
         (new Date().getTimezoneOffset() - clientTimezoneOffset) / 60
       );
 
