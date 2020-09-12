@@ -4,8 +4,12 @@ const {
 
 const tagSchema = new Schema({
   id: {
-    type: Number,
+    type: String,
     required: true
+  },
+  userId: {
+    type: String,
+    default: '',
   },
   name: {
     type: String,
