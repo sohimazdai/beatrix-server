@@ -23,8 +23,6 @@ class TagController {
             });
             await newTag.save();
             user.tagList.set(tagKey, newTag);
-          } else {
-            user.tagList.set(tagKey, tagFromReq);
           }
 
           const tagKeysRequest = Object.keys(tagList);
@@ -44,6 +42,7 @@ class TagController {
             await user.save();
           }
         }
+
         await user.save();
       }
 
