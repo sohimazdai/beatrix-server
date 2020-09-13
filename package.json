@@ -18,7 +18,8 @@
     "express": "^4.17.1",
     "mongoose": "^5.9.2",
     "morgan": "^1.9.1",
-    "node-notifier": "^6.0.0"
+    "node-notifier": "^6.0.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "@types/node": "^13.7.4",

@@ -21,4 +21,6 @@ module.exports = {
     COMPLETE_ONBOARDING: '/onboarding/complete',
     //TAGS
     TAGS_SYNC: '/tag/sync',
+    // FOOD
+    FOOD_GET_BY_ID: '/food/get',
 }

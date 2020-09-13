@@ -9,6 +9,8 @@ const tagRoutes = require('./src/routes/tagRoutes');
 const appRoutes = require('./src/routes/appRoutes');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const { authFatSecret } = require('./src/requests/foodRequests');
+const { FAT_SECRET_ENTITIES } = require('./src/entities/Food');
 
 var app = express();
 
@@ -49,6 +51,8 @@ async function start() {
   }
 }
 
+authFatSecret();
+
 start();
 
 function responseAccessSetter(req, res, next) {
@@ -64,3 +68,8 @@ function checker(req, res, next) {
     next();
   }
 }
+
+// function isItTimeToUpdateAccessToken(req, res, next) {
+//   const timeFromLastRequest = 
+//   if (FAT_SECRET_ENTITIES.)
+// }
