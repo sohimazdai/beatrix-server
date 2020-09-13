@@ -27,22 +27,23 @@ class TagController {
             user.tagList.set(tagKey, tagFromReq);
           }
 
-          const userTagList = await TagModel.find({ userId });
           const tagKeysRequest = Object.keys(tagList);
 
-          for await (let userTag of userTagList) {
-            const isExist = !!tagKeysRequest.find((tagKey) => userTag.id === tagKey);
+          const userTagList = user.tagList;
+          const iterator = userTagList.entries();
+          let item = iterator.next();
+
+          while (!item.done) {
+            const userTagId = item.value[0];
+            const isExist = !!tagKeysRequest.find((tagKey) => tagKey === userTagId);
             if (!isExist) {
-              const tagToDelete = await TagModel.findOne({ id: userTag.id });
-              await TagModel.findOneAndRemove({ id: userTag.id })
-
-              user.tagList.set(`${tagToDelete.id}`);
-              await user.save();
+              await TagModel.findOneAndRemove({ id: userTagId });
+              user.tagList.set(`${userTagId}`);
             }
+            item = await iterator.next();
+            await user.save();
           }
-
         }
-
         await user.save();
       }
 

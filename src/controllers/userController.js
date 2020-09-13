@@ -1,7 +1,6 @@
 const UserModel = require('../models/userModel');
 const convertNotelist = require('../helpers/notesConverter');
 const convertShedule = require('../helpers/sheduleConverter');
-const { use } = require('../routes/check');
 
 class UserController {
     static async clearInstallationId(req, res) {
