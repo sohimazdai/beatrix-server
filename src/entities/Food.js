@@ -1,6 +1,6 @@
 const FAT_SECRET_ENTITIES = {
   accessToken: '',
-  expiredIn: '',
+  expiresIn: '',
   requestedAt: new Date().getTime(),
 }
 

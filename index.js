@@ -9,7 +9,7 @@ const tagRoutes = require('./src/routes/tagRoutes');
 const appRoutes = require('./src/routes/appRoutes');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-const { authFatSecret } = require('./src/requests/foodRequests');
+const { authFatSecret, getProductById } = require('./src/requests/foodRequests');
 const { FAT_SECRET_ENTITIES } = require('./src/entities/Food');
 
 var app = express();
@@ -25,6 +25,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
 app.use(responseAccessSetter);
+app.use(isItTimeToUpdateAccessToken);
 app.use(testRoutes)
 app.use(noteRoutes);
 app.use(userRoutes);
@@ -51,7 +52,6 @@ async function start() {
   }
 }
 
-authFatSecret();
 
 start();
 
@@ -69,7 +69,20 @@ function checker(req, res, next) {
   }
 }
 
-// function isItTimeToUpdateAccessToken(req, res, next) {
-//   const timeFromLastRequest = 
-//   if (FAT_SECRET_ENTITIES.)
-// }
+function isItTimeToUpdateAccessToken(req, res, next) {
+  if (!FAT_SECRET_ENTITIES) {
+    authFatSecret();
+  } else if (!FAT_SECRET_ENTITIES.accessToken) {
+    authFatSecret();
+  } else {
+    const looseTime = FAT_SECRET_ENTITIES.requestedAt + FAT_SECRET_ENTITIES.expiresIn * 1000
+    const looseInHours = (looseTime - new Date().getTime()) / (1000 * 60 * 60);
+
+    if (looseInHours < 2) {
+      authFatSecret();
+    } else {
+    }
+  }
+
+  next();
+}
