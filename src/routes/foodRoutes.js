@@ -5,6 +5,6 @@ const FoodController = require('../controllers/foodController');
 const routes = require('./routes');
 const router = Router();
 
-router.post(routes.FOOD_GET_BY_ID, FoodController.getById)
+router.post(routes.FOOD_SEARCH, FoodController.search)
 
 module.exports = router;

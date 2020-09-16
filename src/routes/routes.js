@@ -23,4 +23,5 @@ module.exports = {
     TAGS_SYNC: '/tag/sync',
     // FOOD
     FOOD_GET_BY_ID: '/food/get',
+    FOOD_SEARCH: '/food/search',
 }

@@ -6,11 +6,13 @@ const testRoutes = require('./src/routes/check');
 const exportRoutes = require('./src/routes/exportRoutes');
 const onboardingRoutes = require('./src/routes/onboardingRoutes');
 const tagRoutes = require('./src/routes/tagRoutes');
+const foodRoutes = require('./src/routes/foodRoutes');
 const appRoutes = require('./src/routes/appRoutes');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const { authFatSecret, getProductById } = require('./src/requests/foodRequests');
-const { FAT_SECRET_ENTITIES } = require('./src/entities/Food');
+const { FAT_SECRET_ENTITIES, ONE_HOUR } = require('./src/entities/Food');
+const foodRequests = require('./src/requests/foodRequests');
 
 var app = express();
 
@@ -32,6 +34,7 @@ app.use(userRoutes);
 app.use(exportRoutes);
 app.use(onboardingRoutes);
 app.use(tagRoutes);
+app.use(foodRoutes);
 app.use(appRoutes);
 
 async function start() {
@@ -46,6 +49,9 @@ async function start() {
         app.listen(PORT, function () {
           console.log('Listen on port ' + PORT + '...');
         })
+      })
+      .then(() => {
+        authFatSecret();
       });
   } catch (e) {
     console.log('App start error: ', e)
@@ -75,14 +81,17 @@ function isItTimeToUpdateAccessToken(req, res, next) {
   } else if (!FAT_SECRET_ENTITIES.accessToken) {
     authFatSecret();
   } else {
-    const looseTime = FAT_SECRET_ENTITIES.requestedAt + FAT_SECRET_ENTITIES.expiresIn * 1000
-    const looseInHours = (looseTime - new Date().getTime()) / (1000 * 60 * 60);
+    const timeUntilNeedMakeRequest = FAT_SECRET_ENTITIES.requestedAtInHours + FAT_SECRET_ENTITIES.expiresIn;
+    const diff = timeUntilNeedMakeRequest - new Date().getTime() / ONE_HOUR;
 
-    if (looseInHours < 2) {
+    if (diff < 14) {
       authFatSecret();
-    } else {
     }
   }
 
+  if(FAT_SECRET_ENTITIES.accessToken) {
+    foodRequests.searchFatSecret('Eggs');
+  }
   next();
 }
+

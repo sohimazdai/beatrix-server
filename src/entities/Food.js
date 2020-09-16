@@ -1,7 +1,10 @@
+const ONE_HOUR = 1000 * 60 * 60;
+
 const FAT_SECRET_ENTITIES = {
-  accessToken: '',
+  accessToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjQ1MjZBMkFCNkQ0MkQ5REIwMjBEMThBRDMxRTE5MTdCMUUzMjg2RTUiLCJ0eXAiOiJhdCtqd3QiLCJ4NXQiOiJSU2FpcTIxQzJkc0NEUml0TWVHUmV4NHlodVUifQ.eyJuYmYiOjE2MDAyNTA5MzUsImV4cCI6MTYwMDMzNzMzNSwiaXNzIjoiaHR0cHM6Ly9vYXV0aC5mYXRzZWNyZXQuY29tIiwiYXVkIjoiYmFzaWMiLCJjbGllbnRfaWQiOiJkODQ3MDlkMDI2MmU0Zjg2ODE3YWQyZDJkYTcxODNmNSIsInNjb3BlIjpbImJhc2ljIl19.Tkzh4HmMV6tpUPanT2ndbikllYZiZfLJE4BQLDcRIjldwXSi3LMcrWoULxo1CkS6sNriFKZIo1QqVcVJdy7FApe6f-k1ADSoKOIYdnhKjLHVwrj5jTg8czwRRR9kqsLtL4yfOiYxDYBoHD-3ij7OA4wXSy2m0trg2ZBvEWa9kBkf7GkHL6X2H_DEo6NyjDQT5H7kV5x4gstQwB4hcMeaQLb-GbSero8a-wueA3lY1j6XYNVOiPT8Et-i_2K7_wSxi6Lkb2cEmigmPCnisys7ZHHHaLW65cjRSF9vdvMGQNgDkauEFTv6SP0cEs2-aGSCB0_vKNV_wqsiaLXsUI008w',
   expiresIn: '',
-  requestedAt: new Date().getTime(),
+  requestedAtInHours: new Date().getTime() / ONE_HOUR,
 }
 
-module.exports = { FAT_SECRET_ENTITIES };
+
+module.exports = { FAT_SECRET_ENTITIES, ONE_HOUR };
