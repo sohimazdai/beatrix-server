@@ -11,7 +11,6 @@ class FoodController {
 
       const search = await foodRequests.searchFatSecret(searchString);
 
-      console.log('🤖🤖🤖🤖 search', search);
       res.status(200).send(search).end();
     } catch (e) {
       console.log('Ошибка обработки запроса поиска на FatSecret', e);

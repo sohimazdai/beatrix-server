@@ -89,9 +89,6 @@ function isItTimeToUpdateAccessToken(req, res, next) {
     }
   }
 
-  if(FAT_SECRET_ENTITIES.accessToken) {
-    foodRequests.searchFatSecret('Eggs');
-  }
   next();
 }
 
