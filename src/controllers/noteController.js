@@ -136,9 +136,10 @@ function createNote(note) {
         breadUnits: note.breadUnits,
         insulin: note.insulin,
         longInsulin: note.longInsulin,
-        comment: note.comment,
-        userId: note.userId
-    })
+        commentary: note.commentary,
+        tagIds: note.tagIds, 
+        userId: note.userId,
+    });
 }
 
 module.exports = NoteController;

@@ -31,12 +31,12 @@ const noteSchema = new Schema({
         type: Number,
         default: '0'
     },
-    comment: {
+    commentary: {
         type: String,
         default: "",
     },
     tagIds: {
-        type: [Number],
+        type: [String],
         default: [],
     },
 })

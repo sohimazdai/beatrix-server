@@ -32,7 +32,8 @@ const ROUTES = [
             glucose: 'string',
             breadUnits: 'string',
             insulin: 'string',
-            longInsulin: 'string'
+            longInsulin: 'string',
+            commentary: 'string',
         }
     },
     {
@@ -76,8 +77,10 @@ const ROUTES = [
         path: ROUTES_ENUM.SYNC_USER,
         method: 'POST',
         body: {
-            id: 'asdf',
-            email: 'example@sample.com'
+            user: {
+                id: 'id',
+                email: 'example@sample.com'
+            },
         }
     },
     {
