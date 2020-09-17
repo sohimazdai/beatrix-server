@@ -48,6 +48,8 @@ const ROUTES = [
             breadUnits: 'string',
             insulin: 'string',
             longInsulin: 'string',
+            commentary: 'string',
+            tagIds: 'array'
         }
     },
     {

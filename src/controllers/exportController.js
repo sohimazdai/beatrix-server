@@ -104,7 +104,7 @@ class ExportController {
           breadUnits: note.breadUnits,
           insulin: note.insulin,
           longInsulin: note.longInsulin,
-          comment: note.comment,
+          comment: note.commentary,
         })
       })
       worksheet.commit();
