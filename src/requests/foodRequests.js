@@ -59,6 +59,17 @@ async function searchFatSecret(searchString) {
   } catch (e) {
     console.error('Ошибка поиска на FatSecret', e);
   }
+
+  async function pullLocalFoods() {
+    try {
+
+    } catch (e) {
+      if (e) {
+        console.error('Ошибка авторизации на FatSecret', e);
+
+      }
+    }
+  }
 }
 
 module.exports = {

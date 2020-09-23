@@ -24,4 +24,8 @@ module.exports = {
     // FOOD
     FOOD_GET_BY_ID: '/food/get',
     FOOD_SEARCH: '/food/search',
+    FOOD_ADD_PRODUCT: '/food/add',
+    FOOD_GET_PRODUCTS_BY_DB_ID: '/food/dbid/products',
+    FOOD_SEARCH_DBS_PRODUCTS: '/food/search/dbs',
+    FOOD_REMOVE_DB: '/food/remove/db',
 }

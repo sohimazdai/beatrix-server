@@ -123,6 +123,28 @@ const ROUTES = [
             carbsUnitWeightType: 'string',
         }
     },
+    {
+        path: ROUTES_ENUM.FOOD_GET_PRODUCTS_BY_DB_ID,
+        method: 'POST',
+        body: {
+            dbId: 'string',
+        }
+    },
+    {
+        path: ROUTES_ENUM.FOOD_SEARCH_DBS_PRODUCTS,
+        method: 'POST',
+        body: {
+            dbs: 'array',
+            searchOptions: 'object',
+        }
+    },
+    {
+        path: ROUTES_ENUM.FOOD_REMOVE_DB,
+        method: 'POST',
+        body: {
+            dbId: 'string',
+        }
+    },
 ]
 
 module.exports = router;
