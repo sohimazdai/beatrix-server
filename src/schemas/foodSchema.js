@@ -6,12 +6,15 @@ const foodSchema = new Schema({
     required: true,
   },
   sourceId: {
-    type: Number,
+    type: String,
     required: true,
   },
   dbId: {
-    type: Number,
+    type: String,
     required: true,
+  },
+  barcode: {
+    type: String,
   },
   name: {
     type: String,
@@ -20,7 +23,7 @@ const foodSchema = new Schema({
   description: {
     type: String,
   },
-  developer: {
+  brandName: {
     type: String,
   },
   calories: {
@@ -49,6 +52,15 @@ const foodSchema = new Schema({
   categoryId: {
     type: Number,
   },
+  imageSrc: {
+    type: String,
+  },
+  locale: {
+    type: String
+  },
+  region: {
+    type: String
+  }
 });
 
 module.exports = foodSchema;

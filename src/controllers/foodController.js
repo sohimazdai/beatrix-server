@@ -35,7 +35,7 @@ class FoodController {
         await newProduct.save();
       }
 
-      res.status(200).send('OK').end();
+      res.status(200).send({ success: true }).end();
     } catch (e) {
       console.log('Ошибка добавления продукта в БД', e);
       res.status(503).send().end();
@@ -55,7 +55,7 @@ class FoodController {
     }
   }
 
-  static async searchBdsProducts(req, res) {
+  static async searchDbsProducts(req, res) {
     try {
       const dbs = req.body.dbs;
       const searchOptions = req.body.searchOptions;
@@ -85,9 +85,14 @@ class FoodController {
         db = databasesIterator.next();
       }
 
+      const response = {
+        foods: products.slice(0, 10),
+        total: products.length,
+      }
+
       res
         .status(200)
-        .send(products)
+        .send(response)
         .end();
     } catch (e) {
       console.log('Ошибка получения продуктов с локальной БД', e);
@@ -98,7 +103,7 @@ class FoodController {
     }
   }
 
-  static async deleteBd(req, res) {
+  static async deleteDb(req, res) {
     try {
       const dataBaseId = req.body.dbId;
       if (!dataBaseId) throw new Error('Не указан dataBaseId (dbId)');
