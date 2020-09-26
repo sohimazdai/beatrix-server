@@ -7,6 +7,7 @@ const exportRoutes = require('./src/routes/exportRoutes');
 const onboardingRoutes = require('./src/routes/onboardingRoutes');
 const tagRoutes = require('./src/routes/tagRoutes');
 const foodRoutes = require('./src/routes/foodRoutes');
+const favoritesFoodRoutes = require('./src/routes/favoritesFoodRoutes');
 const appRoutes = require('./src/routes/appRoutes');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
@@ -35,6 +36,7 @@ app.use(exportRoutes);
 app.use(onboardingRoutes);
 app.use(tagRoutes);
 app.use(foodRoutes);
+app.use(favoritesFoodRoutes);
 app.use(appRoutes);
 
 async function start() {

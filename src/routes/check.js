@@ -145,6 +145,44 @@ const ROUTES = [
             dbId: 'string',
         }
     },
+    {
+        path: ROUTES_ENUM.FOOD_GET_DBS_LIST,
+        method: 'POST',
+    },
+    {
+        path: ROUTES_ENUM.FOOD_GET_BY_BARCODE,
+        method: 'POST',
+        body: {
+            barcode: 'string'
+        }
+    },
+    {
+        path: ROUTES_ENUM.FOOD_GET_ALL_WITH_BARCODE,
+        method: 'POST',
+    },
+    {
+        path: ROUTES_ENUM.FAVORITES_ADD,
+        method: 'POST',
+        body: {
+            userId: 'string',
+            foodId: 'string',
+        }
+    },
+    {
+        path: ROUTES_ENUM.FAVORITES_REMOVE,
+        method: 'POST',
+        body: {
+            userId: 'string',
+            foodIds: 'string'
+        }
+    },
+    {
+        path: ROUTES_ENUM.FAVORITES_GET,
+        method: 'POST',
+        body: {
+            userId: 'string',
+        }
+    },
 ]
 
 module.exports = router;

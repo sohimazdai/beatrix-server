@@ -1,6 +1,7 @@
 const {
     Schema,
 } = require('mongoose');
+const foodNoteSchema = require('./foodNoteSchema');
 
 const noteSchema = new Schema({
     id: {
@@ -39,6 +40,11 @@ const noteSchema = new Schema({
         type: [String],
         default: [],
     },
+    foodList: {
+        type: Map,
+        of: foodNoteSchema,
+        default: {},
+    }
 })
 
 module.exports = noteSchema

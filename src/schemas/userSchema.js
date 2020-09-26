@@ -50,7 +50,7 @@ const userSchema = new Schema({
         type: Map,
         of: TagSchema,
         default: {}
-    }
+    },
 })
 
 module.exports = userSchema;

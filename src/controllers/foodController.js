@@ -3,6 +3,30 @@ const foodRequests = require('../requests/foodRequests');
 
 class FoodController {
   static async getById(req, res) {
+    try {
+      const foodId = req.body.foodId;
+      if (!foodId) throw new Error('Не передан foodId');
+
+      const food = await FoodModel.findOne({ id: foodId });
+
+      if (!food) {
+        res
+          .status(503)
+          .send({ error: 'Food item не найден', success: false })
+          .end();
+      } else {
+        res
+          .status(200)
+          .send(food)
+          .end();
+      }
+    } catch (e) {
+      console.log('Ошибка обработки комлпексного запроса поиска на FatSecret', e);
+      res
+        .status(503)
+        .send({ error: 'Ошибка обработки запроса поиска на FatSecret' + e, success: false })
+        .end();
+    }
   }
 
   static async search(req, res) {
@@ -119,6 +143,61 @@ class FoodController {
       res
         .status(503)
         .send({ error: 'Ошибка удаления локальной БД' + e })
+        .end();
+    }
+  }
+
+  static async getDBsList(req, res) {
+    try {
+      const dbs = await FoodModel.distinct('dbId');
+
+      res
+        .status(200)
+        .send(dbs)
+        .end()
+    } catch (e) {
+      console.log('Ошибка запроса списка идентификаторов БД', e);
+      res
+        .status(503)
+        .send({ error: 'Ошибка запроса списка идентификаторов БД' + e })
+        .end();
+    }
+  }
+
+  static async getByBarcode(req, res) {
+    try {
+      const barcode = req.body.barcode;
+
+      const food = await FoodModel.findOne({ barcode: barcode });
+
+      res
+        .status(200)
+        .send(food)
+        .end()
+    } catch (e) {
+      console.log('Ошибка запроса продукта по штрихкоду', e);
+      res
+        .status(503)
+        .send({ error: 'Ошибка запроса продукта по штрихкоду' + e })
+        .end();
+    }
+  }
+
+  static async getAllWithBarcode(req, res) {
+    try {
+      const foods = await FoodModel.find({
+        barcode: { "$regex": '', "$options": "i" },
+      });
+
+      res
+        .status(200)
+        .send(foods)
+        .end()
+    } catch (e) {
+      console.log('Ошибка запроса всех продуктов со штрихкодом', e);
+      res
+        .status(503)
+        .send({ error: 'Ошибка запроса всех продуктов со штрихкодом' + e })
         .end();
     }
   }

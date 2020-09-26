@@ -28,4 +28,11 @@ module.exports = {
     FOOD_GET_PRODUCTS_BY_DB_ID: '/food/dbid/products',
     FOOD_SEARCH_DBS_PRODUCTS: '/food/search/dbs',
     FOOD_REMOVE_DB: '/food/remove/db',
+    FOOD_GET_DBS_LIST: '/food/get/dbs',
+    FOOD_GET_BY_BARCODE: '/food/get/barcode',
+    FOOD_GET_ALL_WITH_BARCODE: '/food/get/barcode/all',
+    //FAVORITES
+    FAVORITES_ADD: '/favorites/add',
+    FAVORITES_REMOVE: '/favorites/remove',
+    FAVORITES_GET: '/favorites/get',
 }

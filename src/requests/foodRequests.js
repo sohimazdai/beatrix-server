@@ -52,7 +52,6 @@ async function searchFatSecret(searchString) {
 
     const { data } = await axios(getOptions);
 
-    console.log('🤖🤖🤖🤖 data', data);
     return {
       foods: data.foods.food,
       total: data.foods['total_results'],
