@@ -20,36 +20,10 @@ const foodSchema = new Schema({
     type: String,
     required: true
   },
-  description: {
-    type: String,
-  },
   brandName: {
     type: String,
   },
-  calories: {
-    type: Number,
-    required: true,
-  },
-  energy: {
-    type: Number,
-    required: true,
-  },
-  carbohydrates: {
-    type: Number,
-    required: true,
-  },
-  proteins: {
-    type: Number,
-    required: true,
-  },
-  fats: {
-    type: Number,
-    required: true,
-  },
   gi: {
-    type: Number,
-  },
-  categoryId: {
     type: Number,
   },
   imageSrc: {
@@ -60,7 +34,30 @@ const foodSchema = new Schema({
   },
   region: {
     type: String
-  }
+  },
+
+  nutrients: {
+    calories: {
+      type: Number,
+      required: true,
+    },
+    energy: {
+      type: Number,
+      required: true,
+    },
+    carbohydrates: {
+      type: Number,
+      required: true,
+    },
+    proteins: {
+      type: Number,
+      required: true,
+    },
+    fats: {
+      type: Number,
+      required: true,
+    },
+  },
 });
 
 module.exports = foodSchema;

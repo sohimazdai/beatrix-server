@@ -10,9 +10,11 @@ class FoodController {
       const food = await FoodModel.findOne({ id: foodId });
 
       if (!food) {
+        console.log('Ошибка получения продукта из БД: FOOD__NOT_FOUND', e);
+
         res
           .status(503)
-          .send({ error: 'Food item не найден', success: false })
+          .send()
           .end();
       } else {
         res
@@ -21,10 +23,10 @@ class FoodController {
           .end();
       }
     } catch (e) {
-      console.log('Ошибка обработки комлпексного запроса поиска на FatSecret', e);
+      console.log('Ошибка получения продукта из БД', e);
       res
         .status(503)
-        .send({ error: 'Ошибка обработки запроса поиска на FatSecret' + e, success: false })
+        .send('Ошибка получения продукта из БД: ' + e)
         .end();
     }
   }
@@ -40,7 +42,7 @@ class FoodController {
       console.log('Ошибка обработки комлпексного запроса поиска на FatSecret', e);
       res
         .status(503)
-        .send({ error: 'Ошибка обработки запроса поиска на FatSecret' + e })
+        .send('Ошибка обработки запроса поиска на FatSecret: ' + e)
         .end();
     }
   }
@@ -62,7 +64,7 @@ class FoodController {
       res.status(200).send({ success: true }).end();
     } catch (e) {
       console.log('Ошибка добавления продукта в БД', e);
-      res.status(503).send().end();
+      res.status(503).send('Ошибка добавления продукта в БД: ' + e).end();
     }
   }
 
