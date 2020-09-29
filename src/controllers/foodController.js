@@ -1,5 +1,6 @@
 const FoodModel = require('../models/foodModel');
 const foodRequests = require('../requests/foodRequests');
+const { searchFood } = require('../selectors/search-food');
 
 class FoodController {
   static async getById(req, res) {
@@ -83,36 +84,21 @@ class FoodController {
 
   static async searchDbsProducts(req, res) {
     try {
+      const MAX_FOODS = 10;
+
       const dbs = req.body.dbs;
       const searchOptions = req.body.searchOptions;
 
       if (!dbs) throw new Error('dbs field is not defined');
       if (!searchOptions) throw new Error('searchOptions field is not defined');
 
-      const { name, ...restOptions } = searchOptions;
+      const { name } = searchOptions;
       if (!name) throw new Error('name field is not defined');
 
-      let products = [];
-
-      const databasesIterator = dbs.entries();
-      let db = databasesIterator.next();
-
-      while (!db.done) {
-        const dbId = db.value[1];
-
-        const dbFoods = await FoodModel.find({
-          ...restOptions,
-          name: { "$regex": name, "$options": "i" },
-          dbId,
-        })
-
-        products = products.concat(dbFoods);
-
-        db = databasesIterator.next();
-      }
+      const products = await searchFood(dbs, name, MAX_FOODS)
 
       const response = {
-        foods: products.slice(0, 10),
+        foods: products.slice(0, MAX_FOODS),
         total: products.length,
       }
 
