@@ -11,12 +11,9 @@ class FoodController {
       const food = await FoodModel.findOne({ id: foodId });
 
       if (!food) {
-        console.log('Ошибка получения продукта из БД: FOOD__NOT_FOUND', e);
-
-        res
-          .status(503)
-          .send()
-          .end();
+        console.log(__dirname + '/' + __filename + "Ошибка получения продукта из БД: FOOD__NOT_FOUND");
+        res.status(503);
+        res.send();
       } else {
         res
           .status(200)
@@ -24,11 +21,9 @@ class FoodController {
           .end();
       }
     } catch (e) {
-      console.log('Ошибка получения продукта из БД', e);
-      res
-        .status(503)
-        .send('Ошибка получения продукта из БД: ' + e)
-        .end();
+      console.log(__dirname + '/' + __filename + " catch error: ", e);
+      res.status(400);
+      res.send(e.message)
     }
   }
 
@@ -40,11 +35,9 @@ class FoodController {
 
       res.status(200).send(searchResult).end();
     } catch (e) {
-      console.log('Ошибка обработки комлпексного запроса поиска на FatSecret', e);
-      res
-        .status(503)
-        .send('Ошибка обработки запроса поиска на FatSecret: ' + e)
-        .end();
+      console.log(__dirname + '/' + __filename + " catch error: ", e);
+      res.status(400);
+      res.send(e.message)
     }
   }
 
@@ -64,8 +57,9 @@ class FoodController {
 
       res.status(200).send({ success: true }).end();
     } catch (e) {
-      console.log('Ошибка добавления продукта в БД', e);
-      res.status(503).send('Ошибка добавления продукта в БД: ' + e).end();
+      console.log(__dirname + '/' + __filename + " catch error: ", e);
+      res.status(400);
+      res.send(e.message)
     }
   }
 
@@ -77,8 +71,9 @@ class FoodController {
 
       res.status(200).send(products).end();
     } catch (e) {
-      console.log('Ошибка выдачи продуктов по идентификатору БД', e);
-      res.status(503).send('Ошибка выдачи продуктов по идентификатору БД: ' + e).end();
+      console.log(__dirname + '/' + __filename + " catch error: ", e);
+      res.status(400);
+      res.send(e.message)
     }
   }
 
@@ -107,11 +102,9 @@ class FoodController {
         .send(response)
         .end();
     } catch (e) {
-      console.log('Ошибка получения продуктов с локальной БД', e);
-      res
-        .status(503)
-        .send({ error: 'Ошибка получения продуктов с локальной БД' + e })
-        .end();
+      console.log(__dirname + '/' + __filename + " catch error: ", e);
+      res.status(400);
+      res.send(e.message)
     }
   }
 
@@ -127,11 +120,9 @@ class FoodController {
         .send(deleted)
         .end();
     } catch (e) {
-      console.log('Ошибка удаления локальной БД', e);
-      res
-        .status(503)
-        .send({ error: 'Ошибка удаления локальной БД' + e })
-        .end();
+      console.log(__dirname + '/' + __filename + " catch error: ", e);
+      res.status(400);
+      res.send(e.message)
     }
   }
 
@@ -144,11 +135,9 @@ class FoodController {
         .send(dbs)
         .end()
     } catch (e) {
-      console.log('Ошибка запроса списка идентификаторов БД', e);
-      res
-        .status(503)
-        .send({ error: 'Ошибка запроса списка идентификаторов БД' + e })
-        .end();
+      console.log(__dirname + '/' + __filename + " catch error: ", e);
+      res.status(400);
+      res.send(e.message)
     }
   }
 
@@ -163,11 +152,9 @@ class FoodController {
         .send(food)
         .end()
     } catch (e) {
-      console.log('Ошибка запроса продукта по штрихкоду', e);
-      res
-        .status(503)
-        .send({ error: 'Ошибка запроса продукта по штрихкоду' + e })
-        .end();
+      console.log(__dirname + '/' + __filename + " catch error: ", e);
+      res.status(400);
+      res.send(e.message)
     }
   }
 
@@ -182,11 +169,9 @@ class FoodController {
         .send(foods)
         .end()
     } catch (e) {
-      console.log('Ошибка запроса всех продуктов со штрихкодом', e);
-      res
-        .status(503)
-        .send({ error: 'Ошибка запроса всех продуктов со штрихкодом' + e })
-        .end();
+      console.log(__dirname + '/' + __filename + " catch error: ", e);
+      res.status(400);
+      res.send(e.message)
     }
   }
 }
