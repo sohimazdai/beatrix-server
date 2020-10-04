@@ -6,5 +6,4 @@ const FAT_SECRET_ENTITIES = {
   requestedAtInHours: new Date().getTime() / ONE_HOUR,
 }
 
-
 module.exports = { FAT_SECRET_ENTITIES, ONE_HOUR };
