@@ -6,4 +6,31 @@ const FAT_SECRET_ENTITIES = {
   requestedAtInHours: new Date().getTime() / ONE_HOUR,
 }
 
-module.exports = { FAT_SECRET_ENTITIES, ONE_HOUR };
+const MAX_RESPONSE_ARRAY_SIZE = 20;
+
+const FoodDatabase = {
+  USDA_SR_27_PORTNOV: 100,
+  OPEN_FOOD_FACTS: 200,
+  FAT_SECRET_US: 300,
+  USERS_DB: 400,
+  USERS_LOCAL_DB: 800,
+  USERS_FAST_LOCAL_DB: 801,
+}
+
+const FoodDatabasesByRegion = {
+  RU: [
+    FoodDatabase.USDA_SR_27_PORTNOV,
+    FoodDatabase.USERS_DB,
+  ],
+  EN: [
+    FoodDatabase.USERS_DB,
+  ],
+}
+
+module.exports = {
+  FAT_SECRET_ENTITIES,
+  ONE_HOUR,
+  FoodDatabase,
+  FoodDatabasesByRegion,
+  MAX_RESPONSE_ARRAY_SIZE,
+};

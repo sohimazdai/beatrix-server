@@ -80,7 +80,9 @@ async function oneWordSearch(dbIds, firstWord, limit) {
     foods = foods.concat(newFoods);
   }
 
-  return foods;
+  const sorted = foods.sort((food1, food2) => food1.length - food2.length);
+
+  return sorted;
 }
 
 module.exports = {

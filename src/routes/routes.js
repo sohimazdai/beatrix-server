@@ -22,6 +22,7 @@ module.exports = {
     //TAGS
     TAGS_SYNC: '/tag/sync',
     // FOOD
+    FOOD_SEARCH_BY_REGION: '/food/search/region',
     FOOD_GET_BY_ID: '/food/get',
     FOOD_SEARCH: '/food/search',
     FOOD_ADD_PRODUCT: '/food/add',

@@ -14,5 +14,6 @@ router.post(routes.FOOD_REMOVE_DB, FoodController.deleteDb)
 router.post(routes.FOOD_GET_DBS_LIST, FoodController.getDBsList)
 router.post(routes.FOOD_GET_BY_BARCODE, FoodController.getByBarcode)
 router.post(routes.FOOD_GET_ALL_WITH_BARCODE, FoodController.getAllWithBarcode)
+router.post(routes.FOOD_SEARCH_BY_REGION, FoodController.searchRegion)
 
 module.exports = router;

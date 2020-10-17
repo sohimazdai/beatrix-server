@@ -1,8 +1,70 @@
 const FoodModel = require('../models/foodModel');
 const foodRequests = require('../requests/foodRequests');
 const { searchFood } = require('../selectors/search-food');
+const searchDbsProducts = require('./search-dbs-products');
+const { FoodDatabasesByRegion, MAX_RESPONSE_ARRAY_SIZE } = require('../entities/Food');
+
+const REGIONS = {
+  RU: 'RU',
+  EN: 'EN',
+};
+
+const MAX_FOODS = 20;
 
 class FoodController {
+  static async searchRegion(req, res) {
+    try {
+      const searchString = req.body.searchString;
+      const regionGroup = req.body.searchString;
+
+      if (!searchString) throw new Error('Не указан searchString');
+      if (!regionGroup) throw new Error('Не указан regionGroup');
+
+      let foods = {};
+
+      const region = regionGroup === REGIONS.RU ? REGIONS.RU : REGIONS.EN;
+
+      if (region === REGIONS.RU) {
+        const [localFoods, offFoods] = await Promise.all([
+          searchDbsProducts(FoodDatabasesByRegion[region], searchString),
+          foodRequests.searchOpenFoodFacts(searchString),
+        ]);
+
+        foods = {
+          ...localFoods,
+          ...offFoods,
+        }
+        console.log('🤖🤖🤖🤖 RU');
+        console.log('🤖🤖🤖🤖 offFoods', Object.values(offFoods).length);
+        console.log('🤖🤖🤖🤖 localFoods', Object.values(localFoods).length);
+      } else {
+        const [fsFoods, offFoods, localFoods] = await Promise.all([
+          foodRequests.searchFatSecret(searchString),
+          foodRequests.searchOpenFoodFacts(searchString),
+          searchDbsProducts(FoodDatabasesByRegion[region], searchString),
+        ]);
+        console.log('🤖🤖🤖🤖 EN');
+        console.log('🤖🤖🤖🤖 fsFoods', Object.values(fsFoods).length);
+        console.log('🤖🤖🤖🤖 offFoods', Object.values(offFoods).length);
+        console.log('🤖🤖🤖🤖 localFoods', Object.values(localFoods).length);
+
+        foods = {
+          ...fsFoods,
+          ...offFoods,
+          ...localFoods,
+        }
+      };
+
+      res
+        .status(200)
+        .send(foods);
+    } catch (e) {
+      console.log(__dirname + '/' + __filename + " catch error: ", e);
+      res.status(503);
+      res.send({ error: e })
+    }
+  }
+
   static async getById(req, res) {
     try {
       const foodId = req.body.foodId;
@@ -18,7 +80,6 @@ class FoodController {
         res
           .status(200)
           .send(food)
-          .end();
       }
     } catch (e) {
       console.log(__dirname + '/' + __filename + " catch error: ", e);
@@ -30,6 +91,10 @@ class FoodController {
   static async search(req, res) {
     try {
       const searchString = req.body.searchString;
+      const regionGroup = req.body.searchString;
+
+      if (!searchString) throw new Error('Не указан searchString');
+      if (!regionGroup) throw new Error('Не указан regionGroup');
 
       const searchResult = await foodRequests.searchFatSecret(searchString);
 
@@ -79,8 +144,6 @@ class FoodController {
 
   static async searchDbsProducts(req, res) {
     try {
-      const MAX_FOODS = 10;
-
       const dbs = req.body.dbs;
       const searchOptions = req.body.searchOptions;
 
@@ -90,10 +153,10 @@ class FoodController {
       const { name } = searchOptions;
       if (!name) throw new Error('name field is not defined');
 
-      const products = await searchFood(dbs, name, MAX_FOODS)
+      const products = await searchFood(dbs, name, MAX_RESPONSE_ARRAY_SIZE)
 
       const response = {
-        foods: products.slice(0, MAX_FOODS),
+        foods: products.slice(0, MAX_RESPONSE_ARRAY_SIZE),
         total: products.length,
       }
 
