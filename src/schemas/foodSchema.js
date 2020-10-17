@@ -23,6 +23,9 @@ const foodSchema = new Schema({
   brandName: {
     type: String,
   },
+  userId: {
+    type: String,
+  },
   gi: {
     type: Number,
   },
