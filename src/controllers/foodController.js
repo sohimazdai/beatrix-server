@@ -199,8 +199,9 @@ class FoodController {
   static async getByBarcode(req, res) {
     try {
       const barcode = req.body.barcode;
+      if (!barcode) throw new Error('Не передан barcode');
 
-      const food = await FoodModel.findOne({ barcode: barcode });
+      const food = await FoodModel.findOne({ barcode });
 
       res
         .status(200)
