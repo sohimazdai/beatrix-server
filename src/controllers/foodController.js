@@ -9,8 +9,6 @@ const REGIONS = {
   EN: 'EN',
 };
 
-const MAX_FOODS = 20;
-
 class FoodController {
   static async searchRegion(req, res) {
     try {
@@ -34,19 +32,13 @@ class FoodController {
           ...localFoods,
           ...offFoods,
         }
-        console.log('🤖🤖🤖🤖 RU');
-        console.log('🤖🤖🤖🤖 offFoods', Object.values(offFoods).length);
-        console.log('🤖🤖🤖🤖 localFoods', Object.values(localFoods).length);
+
       } else {
         const [fsFoods, offFoods, localFoods] = await Promise.all([
           foodRequests.searchFatSecret(searchString),
           foodRequests.searchOpenFoodFacts(searchString),
           searchDbsProducts(FoodDatabasesByRegion[region], searchString),
         ]);
-        console.log('🤖🤖🤖🤖 EN');
-        console.log('🤖🤖🤖🤖 fsFoods', Object.values(fsFoods).length);
-        console.log('🤖🤖🤖🤖 offFoods', Object.values(offFoods).length);
-        console.log('🤖🤖🤖🤖 localFoods', Object.values(localFoods).length);
 
         foods = {
           ...fsFoods,
