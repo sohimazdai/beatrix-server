@@ -18,50 +18,47 @@ class FavoritesController {
           { userId },
           { $push: { favorites: foodId } }
         );
+
+        await userFavorites.save();
       } else {
         result = await new FavoritesFoodModel({ userId: userId, favorites: [foodId] });
+
         await result.save();
       }
-
-      await userFavorites.save();
 
       res
         .status(200)
         .send(result)
-        .end();
     } catch (e) {
       console.log('Ошибка при добавлении в favorites: ' + e);
 
       res
         .status(503)
-        .send({ error: 'Ошибка при добавлении в favorites', success: false })
-        .end();
+        .send({ error: 'Ошибка при добавлении в favorites', e })
     }
   }
 
   static async remove(req, res) {
     try {
       const userId = req.body.userId;
-      const idsToDelete = req.body.foodIds;
+      const idToDelete = req.body.foodId;
 
-      if (!idsToDelete) throw new Error('Не передан idsToDelete (foodIds)');
+      if (!idToDelete) throw new Error('Не передан idToDelete (foodId)');
       if (!userId) throw new Error('Не передан userId (userId)');
 
       const result = await FavoritesFoodModel.updateMany(
         { userId },
-        { $pullAll: { favorites: idsToDelete } },
+        { $pull: { favorites: idToDelete } },
       );
 
       res
         .status(200)
         .send(result)
-        .end();
     } catch (e) {
       console.log('Ошибка при удалении из favorites: ' + e);
       res
         .status(503)
-        .send({ error: 'Ошибка при удалении из favorites', success: false })
-        .end();
+        .send({ error: 'Ошибка при удалении из favorites', e })
     }
   }
 
@@ -73,15 +70,41 @@ class FavoritesController {
 
       const favorites = await FavoritesFoodModel.findOne({ userId });
 
+      console.log('🤖🤖🤖🤖 favorites', favorites);
       res
         .status(200)
         .send(favorites)
-        .end();
     } catch (e) {
+      console.log('Ошибка при получении favorites: ' + e);
+
       res
         .status(503)
-        .send({ error: 'Ошибка при получении favorites юзера', success: false })
-        .end();
+        .send({ error: 'Ошибка при получении favorites юзера', e })
+    }
+  }
+
+  static async sync(req, res) {
+    try {
+      const userId = req.body.userId;
+      const favorites = req.body.favorites;
+      if (!userId) throw new Error('Не передан userId (userId)');
+      if (!favorites) throw new Error('Не передан favorites (favorites)');
+
+
+      const result = await FavoritesFoodModel.updateMany(
+        { userId },
+        { favorites: favorites },
+      );
+
+      res
+        .status(200)
+        .send(result)
+    } catch (e) {
+      console.log('Ошибка при синхронизации favorites: ' + e);
+
+      res
+        .status(503)
+        .send({ error: 'Ошибка при получении favorites юзера', e })
     }
   }
 }

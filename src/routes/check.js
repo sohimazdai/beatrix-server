@@ -173,7 +173,7 @@ const ROUTES = [
         method: 'POST',
         body: {
             userId: 'string',
-            foodIds: 'string'
+            foodId: 'string'
         }
     },
     {

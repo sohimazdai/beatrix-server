@@ -36,4 +36,5 @@ module.exports = {
     FAVORITES_ADD: '/favorites/add',
     FAVORITES_REMOVE: '/favorites/remove',
     FAVORITES_GET: '/favorites/get',
+    FAVORITES_SYNC: '/favorites/sync',
 }
