@@ -66,8 +66,9 @@ class FoodController {
 
       if (!food) {
         console.log(__dirname + '/' + __filename + "Ошибка получения продукта из БД: FOOD__NOT_FOUND");
-        res.status(503);
-        res.send();
+        res
+          .status(200)
+          .send(null)
       } else {
         res
           .status(200)

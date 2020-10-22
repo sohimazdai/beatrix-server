@@ -10,5 +10,4 @@ router.post(routes.FAVORITES_REMOVE, FavoritesFoodController.remove)
 router.post(routes.FAVORITES_GET, FavoritesFoodController.get)
 router.post(routes.FAVORITES_SYNC, FavoritesFoodController.sync)
 
-
 module.exports = router;

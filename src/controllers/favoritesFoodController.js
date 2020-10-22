@@ -1,4 +1,5 @@
 const FavoritesFoodModel = require('../models/favoritesFoodModel');
+const foodModel = require('../models/foodModel');
 
 class FavoritesController {
   static async add(req, res) {
@@ -69,8 +70,15 @@ class FavoritesController {
       if (!userId) throw new Error('Не передан userId (userId)');
 
       const favorites = await FavoritesFoodModel.findOne({ userId });
+      // console.log('🤖🤖🤖🤖 favorites', favorites.favorites);
+      // const favoritesIds = favorites.favorites;
 
-      console.log('🤖🤖🤖🤖 favorites', favorites);
+      // const foodList = await foodModel.find({
+      //   id: { $in: favoritesIds }
+      // });
+
+      // console.log('🤖🤖🤖🤖 foodList', foodList);
+
       res
         .status(200)
         .send(favorites)
@@ -78,7 +86,7 @@ class FavoritesController {
       console.log('Ошибка при получении favorites: ' + e);
 
       res
-        .status(503)
+        .status(500)
         .send({ error: 'Ошибка при получении favorites юзера', e })
     }
   }
