@@ -13,14 +13,14 @@ class FoodController {
   static async searchRegion(req, res) {
     try {
       const searchString = req.body.searchString;
-      const regionGroup = req.body.searchString;
+      const regionGroup = req.body.regionGroup;
 
       if (!searchString) throw new Error('Не указан searchString');
       if (!regionGroup) throw new Error('Не указан regionGroup');
 
       let foods = {};
 
-      const region = regionGroup === REGIONS.RU ? REGIONS.RU : REGIONS.EN;
+      const region = regionGroup !== REGIONS.RU ? REGIONS.RU : REGIONS.EN;
 
       if (region === REGIONS.RU) {
         const [localFoods, offFoods] = await Promise.all([
@@ -74,24 +74,6 @@ class FoodController {
           .status(200)
           .send(food)
       }
-    } catch (e) {
-      console.log(__dirname + '/' + __filename + " catch error: ", e);
-      res.status(400);
-      res.send(e.message)
-    }
-  }
-
-  static async search(req, res) {
-    try {
-      const searchString = req.body.searchString;
-      const regionGroup = req.body.searchString;
-
-      if (!searchString) throw new Error('Не указан searchString');
-      if (!regionGroup) throw new Error('Не указан regionGroup');
-
-      const searchResult = await foodRequests.searchFatSecret(searchString);
-
-      res.status(200).send(searchResult).end();
     } catch (e) {
       console.log(__dirname + '/' + __filename + " catch error: ", e);
       res.status(400);
