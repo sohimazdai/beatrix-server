@@ -20,7 +20,7 @@ class FoodController {
 
       let foods = {};
 
-      const region = regionGroup !== REGIONS.RU ? REGIONS.RU : REGIONS.EN;
+      const region = regionGroup === REGIONS.RU ? REGIONS.RU : REGIONS.EN;
 
       if (region === REGIONS.RU) {
         const [localFoods, offFoods] = await Promise.all([
