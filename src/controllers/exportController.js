@@ -37,11 +37,13 @@ class ExportController {
   static async exportNotes(req, res) {
     try {
       const userId = req.body.userId;
+      const locale = req.body.locale;
       const titles = req.body.titles || {};
       const from = req.body.from;
       const to = req.body.to;
       const stats = req.body.stats || {};
       const clientTimezoneOffset = req.body.timezoneOffset || 0;
+      const dateSort = req.body.dateSort || 1;
 
       const serverTimezoneOffset = Math.round(
         (new Date().getTimezoneOffset() - clientTimezoneOffset) / 60
@@ -49,7 +51,7 @@ class ExportController {
 
       const userNotes = await NoteModel.find({ userId });
       const sortedUserNotes = userNotes
-        .sort((noteA, noteB) => noteB.date - noteA.date)
+        .sort((noteA, noteB) => (noteA.date * dateSort) - (noteB.date * dateSort))
         .filter(note => note.date > from)
         .filter(note => note.date < to);
 
@@ -69,6 +71,12 @@ class ExportController {
 
       addGeneralStatistics(stats, titles, statisticsSheet, from, to);
       addStatsRows(stats, titles, statisticsSheet);
+      statisticsSheet.getCell('B2').numFmt = locale === 'us'
+        ? "m/d/yyyy"
+        : "dd.mm.yyyy";
+      statisticsSheet.getCell('B3').numFmt = locale === 'us'
+        ? "m/d/yyyy"
+        : "dd.mm.yyyy";
       statisticsSheet.commit();
 
       const worksheet = workbook.addWorksheet('Notes');
@@ -83,29 +91,26 @@ class ExportController {
         { header: titles.comment, key: 'comment', width: 12 },
       ];
 
-      sortedUserNotes.map(note => {
+      sortedUserNotes.map((note, index) => {
         const alteredDate = note.date + serverTimezoneOffset * MS_IN_HOUR;
 
-        const date =
-          (new Date(alteredDate).getDate() < 10 ? '0' + new Date(alteredDate).getDate() : new Date(alteredDate).getDate()) +
-          '.' +
-          (new Date(alteredDate).getMonth() < 9 ? '0' + (new Date(alteredDate).getMonth() + 1) : (new Date(alteredDate).getMonth() + 1)) +
-          '.' +
-          (new Date(alteredDate).getFullYear());
-        const time =
-          (new Date(alteredDate).getHours() < 10 ? '0' + (new Date(alteredDate).getHours()) : (new Date(alteredDate).getHours())) +
-          ':' +
-          (new Date(alteredDate).getMinutes() < 10 ? '0' + (new Date(alteredDate).getMinutes()) : (new Date(alteredDate).getMinutes()));
-
         worksheet.addRow({
-          date,
-          time,
+          date: new Date(alteredDate),
+          time: new Date(alteredDate),
           glucose: note.glucose,
           breadUnits: note.breadUnits,
           insulin: note.insulin,
           longInsulin: note.longInsulin,
           comment: note.commentary,
-        })
+        });
+
+        worksheet.getCell('A' + (index + 2)).numFmt = locale === 'us'
+          ? "m/d/yyyy"
+          : "dd.mm.yyyy";
+
+        worksheet.getCell('B' + (index + 2)).numFmt = locale === 'us'
+          ? "h:mm\\ AM/PM"
+          : "hh:mm";
       })
       worksheet.commit();
 
