@@ -138,6 +138,7 @@ class UserController {
                     shedule: {},
                     tagList: {},
                     isNeedToShowOnboarding: true,
+                    registeredOn: newUser.registeredOn,
                 };
 
                 res.send(resNewUser);
@@ -162,6 +163,7 @@ class UserController {
                     shedule: user.shedule,
                     tagList: user.tagList,
                     isNeedToShowOnboarding: false,
+                    registeredOn: user.registeredOn,
                 };
 
                 res.send(resUser);
