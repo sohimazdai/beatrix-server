@@ -5,6 +5,7 @@ const {
     Schema,
 } = require('mongoose');
 const TagSchema = require('./tagSchema');
+const SheduleSchema = require('./sheduleSchema');
 
 const userSchema = new Schema({
     id: {
@@ -50,6 +51,11 @@ const userSchema = new Schema({
         type: Map,
         of: TagSchema,
         default: {}
+    },
+    shedules: {
+        type: Map,
+        of: SheduleSchema,
+        default: {},
     },
 })
 

@@ -8,12 +8,12 @@ const onboardingRoutes = require('./src/routes/onboardingRoutes');
 const tagRoutes = require('./src/routes/tagRoutes');
 const foodRoutes = require('./src/routes/foodRoutes');
 const favoritesFoodRoutes = require('./src/routes/favoritesFoodRoutes');
+const sheduleRoutes = require('./src/routes/sheduleRoutes');
 const appRoutes = require('./src/routes/appRoutes');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-const { authFatSecret, getProductById } = require('./src/requests/foodRequests');
+const { authFatSecret } = require('./src/requests/foodRequests');
 const { FAT_SECRET_ENTITIES, ONE_HOUR } = require('./src/entities/Food');
-const foodRequests = require('./src/requests/foodRequests');
 
 var app = express();
 
@@ -37,6 +37,7 @@ app.use(onboardingRoutes);
 app.use(tagRoutes);
 app.use(foodRoutes);
 app.use(favoritesFoodRoutes);
+app.use(sheduleRoutes);
 app.use(appRoutes);
 
 async function start() {

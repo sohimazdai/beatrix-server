@@ -1,6 +1,7 @@
 const UserModel = require('../models/userModel');
 const convertNotelist = require('../helpers/notesConverter');
 const convertShedule = require('../helpers/sheduleConverter');
+const convertShedules = require('../modules/convert-shedules');
 
 class UserController {
     static async clearInstallationId(req, res) {
@@ -139,6 +140,7 @@ class UserController {
                     tagList: {},
                     isNeedToShowOnboarding: true,
                     registeredOn: newUser.registeredOn,
+                    shedules: {},
                 };
 
                 res.send(resNewUser);
@@ -161,6 +163,7 @@ class UserController {
                 const resUser = {
                     properties: user.properties,
                     shedule: user.shedule,
+                    shedules: user.shedules,
                     tagList: user.tagList,
                     isNeedToShowOnboarding: false,
                     registeredOn: user.registeredOn,
@@ -247,6 +250,7 @@ class UserController {
             const properties = req.body.properties;
             const idsToConvert = req.body.idsToConvert;
             const shedule = req.body.shedule;
+            const shedules = req.body.shedules;
 
             const user = await UserModel.findOne({ id: userId });
 
@@ -267,6 +271,10 @@ class UserController {
             ) {
                 await convertNotelist(user, idsToConvert, userProperties, properties);
                 await convertShedule(user, shedule, userProperties, properties);
+                if (shedules) {
+                    await convertShedules(user, shedules, userProperties, properties);
+                }
+
                 await user.save();
 
                 res.send(user);

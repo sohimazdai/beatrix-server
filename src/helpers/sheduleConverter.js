@@ -1,9 +1,6 @@
-const NoteModel = require('../models/noteModel');
-const UserModel = require('../models/userModel');
 const {
   GlycemiaMeasuringType,
   CarbsMeasuringType,
-  CarbsUnitWeightType,
   convertMMOLtoMGDL,
   convertMGDLtoMMOLL,
 } = require('./measuringHelper');
