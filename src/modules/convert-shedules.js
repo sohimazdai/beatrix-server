@@ -42,24 +42,27 @@ function convertShedulesItem(
           convertMGDLtoMMOLL(item).toFixed(1)
         );
       }
+      break;
+    case TYPES.CR:
+      if (
+        item && prevCarbsMeasuringType === CarbsMeasuringType.CARBOHYDRATES &&
+        currentCarbsMeasuringType === CarbsMeasuringType.BREAD_UNITS
+      ) {
+        item = Number(
+          (item / carbsUnitWeightType).toFixed(1)
+        );
+      }
+      else if (
+        item && prevCarbsMeasuringType === CarbsMeasuringType.BREAD_UNITS &&
+        currentCarbsMeasuringType === CarbsMeasuringType.CARBOHYDRATES
+      ) {
+        item = Number(
+          (item * carbsUnitWeightType).toFixed(1)
+        );
+      }
+      break;
   }
 
-  if (
-    item && prevCarbsMeasuringType === CarbsMeasuringType.CARBOHYDRATES &&
-    currentCarbsMeasuringType === CarbsMeasuringType.BREAD_UNITS
-  ) {
-    item = Number(
-      (item / carbsUnitWeightType).toFixed(1)
-    );
-  }
-  else if (
-    item && prevCarbsMeasuringType === CarbsMeasuringType.BREAD_UNITS &&
-    currentCarbsMeasuringType === CarbsMeasuringType.CARBOHYDRATES
-  ) {
-    item = Number(
-      (item * carbsUnitWeightType).toFixed(1)
-    );
-  }
 
   return item;
 }
