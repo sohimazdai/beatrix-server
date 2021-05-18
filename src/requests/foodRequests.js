@@ -5,7 +5,6 @@ const { FAT_SECRET_ENTITIES, ONE_HOUR } = require('../entities/Food');
 
 const fatSecretSearchMapper = require('../mappers/fat-secret-food-mapper');
 const oFFMapper = require('../mappers/open-food-facts-mapper');
-const createQueryString = require('../utils/create-query-string');
 
 const FS_CLIENT_SECRET = '63fbbc6c774343b8a4a5506a03ee944d';
 const FS_CLIENT_ID = 'd84709d0262e4f86817ad2d2da7183f5';

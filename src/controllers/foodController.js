@@ -27,26 +27,18 @@ class FoodController {
       const region = regionGroup === REGIONS.EN ? REGIONS.EN : REGIONS.RU;
 
       if (region === REGIONS.RU) {
-        const [localFoods, offFoods] = await Promise.all([
-          searchDbsProducts(FoodDatabasesByRegion[region], searchString),
-          // foodRequests.searchOpenFoodFacts(searchString),
-        ]);
+        const localFoods = await searchDbsProducts(FoodDatabasesByRegion[region], searchString);
 
-        foods = {
-          ...localFoods,
-          ...offFoods,
-        }
+        foods = localFoods;
 
       } else {
-        const [fsFoods, offFoods, localFoods] = await Promise.all([
+        const [fsFoods, localFoods] = await Promise.all([
           foodRequests.searchFatSecret(searchString),
-          // foodRequests.searchOpenFoodFacts(searchString),
           searchDbsProducts(FoodDatabasesByRegion[region], searchString),
         ]);
 
         foods = {
           ...fsFoods,
-          ...offFoods,
           ...localFoods,
         }
       };
