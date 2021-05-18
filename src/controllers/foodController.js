@@ -29,7 +29,7 @@ class FoodController {
       if (region === REGIONS.RU) {
         const [localFoods, offFoods] = await Promise.all([
           searchDbsProducts(FoodDatabasesByRegion[region], searchString),
-          foodRequests.searchOpenFoodFacts(searchString),
+          // foodRequests.searchOpenFoodFacts(searchString),
         ]);
 
         foods = {
@@ -40,7 +40,7 @@ class FoodController {
       } else {
         const [fsFoods, offFoods, localFoods] = await Promise.all([
           foodRequests.searchFatSecret(searchString),
-          foodRequests.searchOpenFoodFacts(searchString),
+          // foodRequests.searchOpenFoodFacts(searchString),
           searchDbsProducts(FoodDatabasesByRegion[region], searchString),
         ]);
 
