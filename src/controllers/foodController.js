@@ -13,14 +13,18 @@ class FoodController {
   static async searchRegion(req, res) {
     try {
       const searchString = req.body.searchString;
-      const regionGroup = req.body.regionGroup;
+      let regionGroup = req.body.regionGroup;
 
       if (!searchString) throw new Error('Не указан searchString');
-      if (!regionGroup) throw new Error('Не указан regionGroup');
+
+      //TODO: (start) when release will be deployed uncomment 21 and remove 22 line
+      // if (!regionGroup) throw new Error('Не указан regionGroup'); 
+      regionGroup = regionGroup || REGIONS.RU;
+      //TODO: (end)
 
       let foods = {};
 
-      const region = regionGroup === REGIONS.RU ? REGIONS.RU : REGIONS.EN;
+      const region = regionGroup === REGIONS.EN ? REGIONS.EN : REGIONS.RU;
 
       if (region === REGIONS.RU) {
         const [localFoods, offFoods] = await Promise.all([
