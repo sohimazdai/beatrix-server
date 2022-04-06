@@ -57,6 +57,11 @@ const userSchema = new Schema({
         of: SheduleSchema,
         default: {},
     },
+    notificationsSeen: {
+        type: Array,
+        of: String,
+        default: [],
+    },
 })
 
 module.exports = userSchema;

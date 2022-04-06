@@ -9,6 +9,7 @@ const tagRoutes = require('./src/routes/tagRoutes');
 const foodRoutes = require('./src/routes/foodRoutes');
 const favoritesFoodRoutes = require('./src/routes/favoritesFoodRoutes');
 const sheduleRoutes = require('./src/routes/sheduleRoutes');
+const notificationsRoutes = require('./src/routes/notificationsRoutes');
 const appRoutes = require('./src/routes/appRoutes');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
@@ -38,6 +39,7 @@ app.use(tagRoutes);
 app.use(foodRoutes);
 app.use(favoritesFoodRoutes);
 app.use(sheduleRoutes);
+app.use(notificationsRoutes);
 app.use(appRoutes);
 
 async function start() {

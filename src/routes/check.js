@@ -183,6 +183,53 @@ const ROUTES = [
             userId: 'string',
         }
     },
+    {
+        path: ROUTES_ENUM.NOTIFICATIONS_GET,
+        method: 'POST',
+        body: {
+            userId: 'string',
+        }
+    },
+    {
+        path: ROUTES_ENUM.NOTIFICATIONS_GET_ALL,
+        method: 'POST',
+    },
+    {
+        path: ROUTES_ENUM.NOTIFICATIONS_CREATE,
+        method: 'POST',
+        body: {
+            id: 'string',
+            versionAndroidFrom: 'string',
+            versionAndroidTo: 'string',
+            versionIOsFrom: 'string',
+            versionIOsTo: 'string',
+            isForAllUsers: 'boolean',
+            title_ru: 'string',
+            title_en: 'string',
+            title_es: 'string',
+            title_ua: 'string',
+            text_ru: 'string',
+            text_en: 'string',
+            text_es: 'string',
+            text_ua: 'string',
+        }
+    },
+    {
+        path: ROUTES_ENUM.NOTIFICATIONS_SEEN,
+        method: 'POST',
+        body: {
+            userId: 'string',
+            notificationId: 'string',
+        }
+    },
+    {
+        path: ROUTES_ENUM.NOTIFICATION_ENABLE,
+        method: 'POST',
+        body: {
+            enabled: 'boolean',
+            notificationId: 'string',
+        }
+    },
 ]
 
 module.exports = router;

@@ -32,9 +32,15 @@ module.exports = {
     FOOD_GET_DBS_LIST: '/food/get/dbs',
     FOOD_GET_BY_BARCODE: '/food/get/barcode',
     FOOD_GET_ALL_WITH_BARCODE: '/food/get/barcode/all',
-    //FAVORITES
+    // FAVORITES
     FAVORITES_ADD: '/favorites/add',
     FAVORITES_REMOVE: '/favorites/remove',
     FAVORITES_GET: '/favorites/get',
     FAVORITES_SYNC: '/favorites/sync',
+    // NOTIFICATIONS
+    NOTIFICATIONS_GET: '/notifications/get',
+    NOTIFICATIONS_GET_ALL: '/notifications/get/all',
+    NOTIFICATIONS_CREATE: '/notifications/create',
+    NOTIFICATIONS_SEEN: '/notifications/seen',
+    NOTIFICATION_ENABLE: '/notifications/enable',
 }
