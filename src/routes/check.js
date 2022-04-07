@@ -204,6 +204,7 @@ const ROUTES = [
             versionIOsFrom: 'string',
             versionIOsTo: 'string',
             isForAllUsers: 'boolean',
+            regionsToShow: 'string[]',
             title_ru: 'string',
             title_en: 'string',
             title_es: 'string',

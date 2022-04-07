@@ -32,6 +32,13 @@ const notificationsSchema = new Schema({
         required: false,
         default: true,
     },
+    regionsToShow: {
+        type: Array,
+        of: String,
+        required: false,
+        default: [],
+    },
+    // For new users too (means the user had signed up after the notification created)
     isForAllUsers: {
         type: Boolean,
         required: false,
