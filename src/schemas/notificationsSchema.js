@@ -7,22 +7,12 @@ const notificationsSchema = new Schema({
         type: String,
         required: true
     },
-    versionAndroidFrom: {
-        type: String,
-        required: false,
-        default: '0',
-    },
-    versionAndroidTo: {
-        type: String,
-        required: false,
-        default: '99',
-    },
-    versionIOsFrom: {
+    versionFrom: {
         type: String,
         required: false,
         default: '0.0.0',
     },
-    versionIOsTo: {
+    versionTo: {
         type: String,
         required: false,
         default: '10.0.0',

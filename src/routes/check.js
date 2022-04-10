@@ -199,10 +199,8 @@ const ROUTES = [
         method: 'POST',
         body: {
             id: 'string',
-            versionAndroidFrom: 'string',
-            versionAndroidTo: 'string',
-            versionIOsFrom: 'string',
-            versionIOsTo: 'string',
+            versionFrom: 'string',
+            versionTo: 'string',
             isForAllUsers: 'boolean',
             regionsToShow: 'string[]',
             title_ru: 'string',
