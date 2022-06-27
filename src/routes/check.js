@@ -69,6 +69,32 @@ const ROUTES = [
         }
     },
     {
+        path: ROUTES_ENUM.SYNC_NOTES_V2,
+        method: "POST",
+        body: {
+            notes: '{}',
+            userId: 'string'
+        }
+    },
+    {
+        path: ROUTES_ENUM.NOTE_RANGE,
+        method: "POST",
+        body: {
+            notes: '{}',
+            userId: 'string',
+            startDate: 'number',
+            endDate: 'number',
+        }
+    },
+    {
+        path: ROUTES_ENUM.IMPORT_NOTES,
+        method: "POST",
+        body: {
+            notes: '{}',
+            userId: 'string',
+        }
+    },
+    {
         path: ROUTES_ENUM.GET_USER,
         method: 'POST',
         body: {

@@ -48,6 +48,7 @@ class UserController {
             res.send(error);
         }
     }
+
     static async updateUserShedule(req, res) {
         try {
             var userId = req.body.userId;

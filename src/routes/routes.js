@@ -6,6 +6,9 @@ module.exports = {
     CREATE_NOTE: '/note/create',
     DELETE_NOTE: '/note/delete',
     SYNC_NOTES: '/note/sync',
+    NOTE_RANGE: '/note/range',
+    SYNC_NOTES_V2: '/note/v2/sync',
+    IMPORT_NOTES: '/note/import',
     //USER
     GET_USER: '/user',
     SYNC_USER: '/user/sync',
