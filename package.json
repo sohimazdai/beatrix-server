@@ -18,7 +18,7 @@
     "express": "^4.17.1",
     "mongoose": "^5.9.2",
     "morgan": "^1.9.1",
-    "node-notifier": "^6.0.0",
+    "node-notifier": "^8.0.1",
     "qs": "^6.9.4",
     "request": "^2.88.2",
     "uuid": "^8.3.1"
