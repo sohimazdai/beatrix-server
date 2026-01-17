@@ -56,7 +56,7 @@ class UserController {
             const user = await UserModel.findOne({ id: userId });
 
             Object.values(req.body.shedule).map(sheduleItem => {
-                user.shedule.set(`${sheduleItem.id}`, sheduleItem);
+                user.shedule.set(`${ sheduleItem.id }`, sheduleItem);
             });
 
             await user.save();
@@ -76,10 +76,10 @@ class UserController {
             var email = req.body.email;
             const user = !id && !email ?
                 //For test
-                await UserModel.find({}) :
+                await UserModel.find({}, { notes: 0 }) :
                 [
-                    ...await UserModel.find({ id }),
-                    ...await UserModel.find({ email })
+                    ...await UserModel.find({ id }, { notes: 0 }),
+                    ...await UserModel.find({ email }, { notes: 0 })
                 ];
             res.type('application/json');
             res.send(user);

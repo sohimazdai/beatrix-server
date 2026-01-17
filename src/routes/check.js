@@ -14,6 +14,11 @@ const ROUTES = [
     {
         path: ROUTES_ENUM.GET_ALL_NOTES,
         method: 'GET',
+        body: {
+            userId: 'string',
+            offset: 'number',
+            limit: 'number'
+        }
     },
     {
         path: ROUTES_ENUM.GET_NOTES,

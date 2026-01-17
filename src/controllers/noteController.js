@@ -13,7 +13,7 @@ class NoteController {
             const notesMap = new Map();
 
             notesToImport.forEach((note) => {
-                notesMap.set(`${note.id}`, {
+                notesMap.set(`${ note.id }`, {
                     ...note,
                     userId: targetUserId,
                 });
@@ -23,7 +23,7 @@ class NoteController {
                 const note = noteEntities[1];
                 const newNote = createNote(note);
                 await newNote.save();
-                user.notes.set(`${newNote.id}`, newNote);
+                user.notes.set(`${ newNote.id }`, newNote);
             }
 
             await user.save();
@@ -90,13 +90,13 @@ class NoteController {
 
                     if (noteToDelete) {
                         await NoteModel.findOneAndRemove({ id: note.id })
-                        user.notes.set(`${noteToDelete.id}`);
+                        user.notes.set(`${ noteToDelete.id }`);
                         await user.save();
                     }
                 } else {
                     const newNote = createNote(note);
                     await newNote.save();
-                    user.notes.set(`${newNote.id}`, newNote);
+                    user.notes.set(`${ newNote.id }`, newNote);
                 }
             }
             await user.save();
@@ -134,7 +134,7 @@ class NoteController {
 
                     await newNote.save();
 
-                    user.notes.set(`${newNote.id}`, newNote);
+                    user.notes.set(`${ newNote.id }`, newNote);
                 }
             }
 
@@ -162,9 +162,19 @@ class NoteController {
 
     static async getAllNotes(req, res) {
         try {
-            const notes = await NoteModel.find({});
-            res.status(200);
-            res.send(notes)
+            const { userId, offset, limit } = req.body;
+
+            if (!userId) {
+                const notes = await NoteModel.find({}).skip(offset).limit(limit);
+                const total = await NoteModel.countDocuments();
+                
+                return res.status(200).send({ notes, pagination: { offset, limit, total } })
+            } else {
+                const notes = await NoteModel.find({ userId }).skip(offset).limit(limit);
+                const total = await NoteModel.countDocuments({ userId });
+
+                return res.status(200).send({ notes, pagination: { offset, limit, total } })
+            }
         }
         catch (e) {
             console.log(__dirname + '/' + __filename + " catch error: ", e)
@@ -213,7 +223,7 @@ class NoteController {
             }, forUpdate);
             const noteToUpdate = await NoteModel.findOne({ id: forUpdate.id })
 
-            user.notes.set(`${noteToUpdate.id}`, noteToUpdate);
+            user.notes.set(`${ noteToUpdate.id }`, noteToUpdate);
             await user.save();
 
             res.status(200);
@@ -250,7 +260,7 @@ class NoteController {
             });
             const data = req.body;
             const note = createNote(data);
-            user.notes.set(`${note.id}`, note);
+            user.notes.set(`${ note.id }`, note);
             await note.save();
             await user.save();
             res.status(200);
